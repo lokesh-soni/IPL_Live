@@ -26,6 +26,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator;
+
 
 public class team extends AppCompatActivity {
     Context context;
@@ -164,8 +167,10 @@ public class team extends AppCompatActivity {
 
                 // Setup and Handover data to recyclerview
                 mTeamRV = (RecyclerView)findViewById(R.id.teamRV);
+                mTeamRV.setItemAnimator(new ScaleInTopAnimator());
+
                 mTeamAdapter = new AdapterTeam(team.this, data);
-                mTeamRV.setAdapter(mTeamAdapter);
+                mTeamRV.setAdapter(new ScaleInAnimationAdapter(mTeamAdapter));
                 mTeamRV.setLayoutManager(new LinearLayoutManager(team.this));
 
             } catch (JSONException e) {

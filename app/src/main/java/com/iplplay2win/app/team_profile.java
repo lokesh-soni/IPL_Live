@@ -25,6 +25,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator;
+
 public class team_profile extends AppCompatActivity {
 
 //    ImageView TeamLogo;
@@ -139,7 +142,6 @@ Context context;
                 conn.disconnect();
             }
 
-
         }
 
         @Override
@@ -168,8 +170,11 @@ Context context;
 
                 // Setup and Handover data to recyclerview
                 mTeamProfileRV = (RecyclerView)findViewById(R.id.players_list_rv);
+                mTeamProfileRV.setItemAnimator(new ScaleInTopAnimator());
+
                 mTeamProfileAdapter = new AdapterTeamProfile(team_profile.this, data);
-                mTeamProfileRV.setAdapter(mTeamProfileAdapter);
+                mTeamProfileRV.setAdapter(new ScaleInAnimationAdapter(mTeamProfileAdapter));
+
                 mTeamProfileRV.setLayoutManager(new LinearLayoutManager(team_profile.this));
 
             } catch (JSONException e) {

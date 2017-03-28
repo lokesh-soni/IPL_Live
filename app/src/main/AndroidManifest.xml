@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.iplplay2win.app">
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.iplplay2win.app.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,13 +22,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iplplay2win.app.team"
+            android:name=".team"
             android:label="@string/title_activity_team"
-            android:parentActivityName="com.iplplay2win.app.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.iplplay2win.app.MainActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -33,13 +37,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iplplay2win.app.Schedule"
+            android:name=".Schedule"
             android:label="@string/title_activity_schedule"
-            android:parentActivityName="com.iplplay2win.app.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.iplplay2win.app.MainActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -47,13 +52,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iplplay2win.app.predict_n_win"
+            android:name=".predict_n_win"
             android:label="@string/title_activity_predict_n_win"
-            android:parentActivityName="com.iplplay2win.app.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.iplplay2win.app.MainActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -61,13 +67,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iplplay2win.app.player_profile"
+            android:name=".player_profile"
             android:label="@string/title_activity_player_profile"
-            android:parentActivityName="com.iplplay2win.app.team"
+            android:parentActivityName=".team"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.iplplay2win.app.team_profile" />
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -75,22 +82,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iplplay2win.app.team_profile"
+            android:name=".team_profile"
             android:label="@string/title_activity_team_profile"
-            android:parentActivityName="com.iplplay2win.app.team"
+            android:parentActivityName=".team"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.iplplay2win.app.team" />
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="561fbc2605f2131a509770d687a9bc164e915539" />
+
+        <activity
+            android:name=".p2w"
+            android:label="@string/title_activity_p2w"
+            android:parentActivityName=".predict_n_win"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.iplplay2win.app.predict_n_win" />
+        </activity>
     </application>
 
 </manifest>

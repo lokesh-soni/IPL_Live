@@ -24,6 +24,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator;
+
 
 public class Schedule extends AppCompatActivity {
     // CONNECTION_TIMEOUT and READ_TIMEOUT are in milliseconds
@@ -158,8 +162,10 @@ public class Schedule extends AppCompatActivity {
 
                 // Setup and Handover data to recyclerview
                 mScheduleRV = (RecyclerView)findViewById(R.id.schedule_rv);
+                mScheduleRV.setItemAnimator(new ScaleInTopAnimator());
                 mAdapter = new AdapterSchedule(Schedule.this, data);
-                mScheduleRV.setAdapter(mAdapter);
+
+                mScheduleRV.setAdapter(new ScaleInAnimationAdapter(mAdapter));
                 mScheduleRV.setLayoutManager(new LinearLayoutManager(Schedule.this));
 
             } catch (JSONException e) {

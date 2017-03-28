@@ -7,6 +7,8 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        CardView schedulebtn = (CardView) findViewById(R.id.schedulebtn);
+        TextView schedulebtn = (TextView) findViewById(R.id.schedulebtn);
         schedulebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(scheduleintent);
             }
         });
-        CardView teambtn = (CardView) findViewById(R.id.teambtn);
+        TextView teambtn = (TextView) findViewById(R.id.teambtn);
         teambtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,15 +43,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(teamintent);
             }
         });
-        CardView p2wbtn = (CardView) findViewById(R.id.p2wbtn);
+        TextView p2wbtn = (TextView) findViewById(R.id.p2wbtn);
         p2wbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Will be live while IPL matches !", Toast.LENGTH_LONG).show();
-
+                Intent pred2win = new Intent(MainActivity.this,p2w.class);
+                startActivity(pred2win);
             }
         });
-        CardView ttypbtn = (CardView) findViewById(R.id.ttypbtn);
+        LinearLayout ttypbtn = (LinearLayout) findViewById(R.id.ttypbtn);
         ttypbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

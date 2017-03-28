@@ -14,21 +14,24 @@
     android:layout_gravity="center_vertical"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:padding="20dip">
+    android:paddingLeft="20dip"
+    android:paddingRight="20dp">
+
 
     <ImageView
         android:layout_width="100dip"
-        android:layout_height="100dip"
+        android:layout_height="80dip"
         android:gravity="center"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ipllogo" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" LIVE"
+        android:text="LIVE"
         android:drawableLeft="@drawable/ic_live"
-        android:textSize="34sp"
+        android:textSize="24sp"
         android:textColor="#C93330"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="-5dp"
         android:layout_marginLeft="-4dip"
         />
     <TextView
@@ -41,65 +44,18 @@
         android:gravity="center"
         android:padding="30dp"
         android:textSize="20sp"
+        android:visibility="visible"
         />
-    </LinearLayout>
 
+   <ListView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/livescores"
+       android:visibility="gone">
 
-<!--<LinearLayout-->
-    <!--android:id="@+id/teamAscores"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_vertical"-->
-    <!--android:gravity="bottom"-->
-    <!--android:orientation="horizontal">-->
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="@color/cardview_light_background"-->
-        <!--android:text="KKR"-->
-        <!--android:textSize="60sp"-->
-        <!--android:textStyle="bold"/>-->
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="@color/cardview_light_background"-->
-        <!--android:text="100/5"-->
-        <!--android:textSize="38sp"/>-->
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="@color/cardview_light_background"-->
-        <!--android:text="Overs 16.5"-->
-        <!--android:padding="4dip"-->
-        <!--android:layout_marginLeft="8dp"-->
-        <!--android:background="#757575"-->
-        <!--android:textSize="16sp"/>-->
-<!--</LinearLayout>-->
-<!--<LinearLayout-->
-    <!--android:id="@+id/teamBscores"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="-12dp"-->
-    <!--&gt;-->
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="RCB"-->
-        <!--android:alpha="0.8"-->
-        <!--android:textSize="24sp"-->
-        <!--android:textColor="@color/cardview_light_background"/>-->
+   </ListView>
 
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textColor="@color/cardview_light_background"-->
-        <!--android:alpha="0.6"-->
-        <!--android:text="125/8"-->
-        <!--android:textSize="24sp"/>-->
-<!--</LinearLayout>-->
-
-
-<!--</LinearLayout>-->
+</LinearLayout>
 
 
     <LinearLayout
@@ -107,9 +63,88 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="bottom"
+        android:layout_gravity="center"
         android:gravity="bottom"
         android:layout_alignParentBottom="true">
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/teambtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teams"
+            android:padding="16dp"
+            android:clickable="true"
+            android:textAllCaps="true"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/schedulebtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Schedule"
+            android:padding="16dp"
+            android:clickable="true"
+            android:textAllCaps="true"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/p2wbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_flash"
+            android:text="Predict 2 Win"
+            android:textAllCaps="true"
+            android:padding="16dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+        <LinearLayout
+            android:id="@+id/ttypbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_talk"
+                android:text="Talk 2 Ur Fav Player"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/ic_check_circle"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/exchangeurticket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tickets_for_exchange"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:clickable="true"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
 
         <LinearLayout
             android:id="@+id/teams_schedule"
@@ -121,108 +156,7 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/teambtn"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="2dip"
-                android:layout_marginRight="4dip"
-                android:layout_weight="0.5"
-                android:padding="8dip"
-                app:cardCornerRadius="8dip">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Teams"
-                    android:textAllCaps="true"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="16sp" />
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/schedulebtn"
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="4dip"
-                android:layout_weight="0.5"
-                android:padding="8dip"
-                app:cardCornerRadius="8dip">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Schedule"
-                    android:textAllCaps="true"
-                    android:textColor="@color/cardview_dark_background"
-                    android:textSize="16sp" />
-            </android.support.v7.widget.CardView>
         </LinearLayout>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/p2wbtn"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dip"
-            android:layout_marginRight="16dip"
-            android:layout_marginTop="8dip"
-            android:padding="8dip"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
-            app:cardCornerRadius="8dip">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/ic_flash"
-                android:text="Predict 2 Win"
-                android:textAllCaps="true"
-                android:textColor="#46faf8"
-                android:textSize="16sp" />
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/ttypbtn"
-            android:layout_width="match_parent"
-            android:layout_height="50dip"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dip"
-            android:layout_marginLeft="16dip"
-            android:layout_marginRight="16dip"
-            android:layout_marginTop="8dip"
-            android:padding="8dip"
-            app:cardBackgroundColor="@color/colorPrimaryDark"
-            app:cardCornerRadius="8dip">
-
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:orientation="horizontal">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_talk"
-        android:text="Talk 2 Ur Fav Player"
-        android:textAllCaps="true"
-        android:textColor="#46faf8"
-        android:textSize="16sp" />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="4dp"
-        android:src="@drawable/ic_check_circle"/>
-
-</LinearLayout>
-
-        </android.support.v7.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -241,17 +175,7 @@
                 android:textColor="@color/cardview_light_background"
                 android:alpha="0.5"
                 />
-            <TextView
-                android:id="@+id/copyright"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="“Images displayed here are for reference only. Cited purely for non-commercial purposes. No copyright infringement intended.” "
-                android:padding="2dip"
-                android:maxLines="2"
-                android:textSize="11sp"
-                android:textColor="@color/cardview_light_background"
-                android:alpha="0.5"
-                />
+
         </LinearLayout>
 
     </LinearLayout>

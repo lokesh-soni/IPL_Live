@@ -8,5 +8,4 @@ class ScheduleData {
 
     String teamAlogo, teamBlogo,teamAShort_name,teamBShort_name,day,time,place,date;
 
-
-}
+    }
