@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.iplplay2win.app.player_profileFragment"
     tools:showIn="@layout/activity_player_profile">
@@ -53,6 +54,18 @@
         android:textSize="22sp"
         android:paddingLeft="20dp"
         android:layout_below="@id/age"/>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewPlayers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="FULL_WIDTHx60"
+        ads:adUnitId="@string/banner_ad_unit_id">
+
+    </com.google.android.gms.ads.AdView>
+
+
 
      <android.support.v7.widget.CardView
          android:layout_width="match_parent"

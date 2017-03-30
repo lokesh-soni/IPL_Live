@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
@@ -49,6 +51,13 @@ public class team extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //BANNER
+        MobileAds.initialize(getApplicationContext(),"ca-app-pub-4161588401571941/6846945512");
+
+        AdView adView=(AdView)findViewById(R.id.adViewTeam);
+        AdRequest adRequest=new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         Intent intent = getIntent();
         String select_title = intent.getStringExtra("Select Title");

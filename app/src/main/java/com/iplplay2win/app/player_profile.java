@@ -16,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +54,14 @@ public class player_profile extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        //BANNER
+        MobileAds.initialize(getApplicationContext(),"ca-app-pub-4161588401571941/6846945512");
+
+        AdView adView=(AdView)findViewById(R.id.adViewPlayers);
+        AdRequest adRequest=new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

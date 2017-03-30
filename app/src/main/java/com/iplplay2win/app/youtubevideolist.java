@@ -17,6 +17,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +45,14 @@ public class youtubevideolist extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        //BANNER
+        MobileAds.initialize(getApplicationContext(),"ca-app-pub-4161588401571941/6846945512");
+
+        AdView adView=(AdView)findViewById(R.id.adViewYoutube);
+        AdRequest adRequest=new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         list=new ArrayList<>();
         pDialog=new ProgressDialog(youtubevideolist.this);

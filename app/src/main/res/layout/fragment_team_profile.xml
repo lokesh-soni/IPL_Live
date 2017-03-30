@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context="com.iplplay2win.app.team_profileFragment"
     tools:showIn="@layout/activity_team_profile">
 <!--<android.support.v7.widget.CardView-->
@@ -114,36 +114,17 @@
             <!--android:layout_below="@id/player_text"-->
 
         </android.support.v7.widget.RecyclerView>
-    <LinearLayout
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
+        android:layout_centerHorizontal="true"
+        ads:adSize="FULL_WIDTHx60"
+        ads:adUnitId="@string/banner_ad_unit_id"
         >
 
-        <TextView
+    </com.google.android.gms.ads.AdView>
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="“No copyright infringement intended” "
-            android:padding="2dip"
-            android:maxLines="2"
-            android:textSize="11sp"
-            android:textColor="@color/cardview_dark_background"
-            android:alpha="0.5"
-            />
-        <TextView
-            android:id="@+id/copyright"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="“Images displayed here are for reference only. Cited purely for non-commercial purposes. No copyright infringement intended.” "
-            android:padding="2dip"
-            android:maxLines="2"
-            android:textSize="11sp"
-            android:textColor="@color/cardview_dark_background"
-            android:alpha="0.5"
-            />
-    </LinearLayout>
 
 </RelativeLayout>
