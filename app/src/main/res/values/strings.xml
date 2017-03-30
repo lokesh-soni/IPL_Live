@@ -8,7 +8,11 @@
     <string name="title_activity_predict_n_win">Predict &amp; Win</string>
     <string name="title_activity_player_profile">player_profile</string>
     <string name="title_activity_team_profile">Team Profile</string>
-    <string name="tickets_for_exchange">Have tickets for Exchanges ? </string>
+    <!--<string name="tickets_for_exchange">Get your Tickets Exchanges ?</string>-->
     <string name="title_activity_p2w">Predict ! Trust your Instict</string>
-
+    <string name="title_activity_youtubevideolist">Exciting YouTube Videos</string>
+    <string name="title_activity_single_videos">single_videos</string>
+    <!--<string name="title_activity_youtubevideos">Exciting YouTube Videos</string>-->
+    <string name="DEVELOPER_KEY">AIzaSyDQehV0CTkMsYPw-AsibspMoBkFF7Cwrck</string>
+    <string name="banner_ad_unit_id">ca-app-pub-4161588401571941/6846945512</string>
 </resources>

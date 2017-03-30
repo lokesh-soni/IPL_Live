@@ -17,7 +17,6 @@
     android:paddingLeft="20dip"
     android:paddingRight="20dp">
 
-
     <ImageView
         android:layout_width="100dip"
         android:layout_height="80dip"
@@ -66,37 +65,63 @@
         android:layout_gravity="center"
         android:gravity="bottom"
         android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_margin="4dp">
+<android.support.v7.widget.CardView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:layout_gravity="center"
+    android:gravity="center"
+    >
+
+            <TextView
+                android:id="@+id/teambtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Teams"
+                android:padding="12dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:textAllCaps="true"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="16sp" />
+</android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_margin="4dp"
+                >
+            <TextView
+                android:id="@+id/schedulebtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Schedule"
+                android:gravity="center"
+                android:layout_weight="0.5"
+                android:padding="12dp"
+                android:clickable="true"
+                android:textAllCaps="true"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="16sp" />
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
 <android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp">
+    android:layout_margin="4dp"
+    app:cardCornerRadius="8dp"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/teambtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Teams"
-            android:padding="16dp"
-            android:clickable="true"
-            android:textAllCaps="true"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/schedulebtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Schedule"
-            android:padding="16dp"
-            android:clickable="true"
-            android:textAllCaps="true"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="16sp" />
         <TextView
             android:id="@+id/p2wbtn"
             android:layout_width="match_parent"
@@ -134,38 +159,40 @@
             android:id="@+id/exchangeurticket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tickets_for_exchange"
+            android:text="Get your Tickets Exchanges!"
             android:textSize="16sp"
             android:padding="16dp"
             android:clickable="true"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
             />
+
+        <TextView
+            android:id="@+id/youtubevideos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Watch Exciting IPL Videos"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_video_library"
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            />
+
+
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
 
 
         <LinearLayout
-            android:id="@+id/teams_schedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dip"
-            android:layout_marginRight="16dip"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="“No copyright infringement intended” "

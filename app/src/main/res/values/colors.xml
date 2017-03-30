@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#305470</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="kkr">#800080</color>
+    <color name="transparent_black">#E6000000</color>
 </resources>

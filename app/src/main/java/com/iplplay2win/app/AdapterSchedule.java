@@ -55,11 +55,9 @@ public class AdapterSchedule extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // load image into imageview using glide
         Glide.with(context).load(current.teamAlogo)
                 .placeholder(R.drawable.ic_img_placeholder)
-                .error(R.drawable.ic_img_error)
                 .into(myHolder.teamAlogo);
         Glide.with(context).load(current.teamBlogo)
                 .placeholder(R.drawable.ic_img_placeholder)
-                .error(R.drawable.ic_img_error)
                 .into(myHolder.teamBlogo);
     }
 
