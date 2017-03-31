@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
-
+        ApplicationAnalytics.getInstance().trackScreenView("Home Screen");
 //        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
 
@@ -34,11 +34,13 @@ public class MainActivity extends AppCompatActivity {
         p2wbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Intent p2w= new Intent(MainActivity.this,p2w.class);
+//                startActivity(p2w);
                 Toast.makeText(MainActivity.this, "Our New Feature, Wait for IPL matches",
                         Toast.LENGTH_LONG).show();
             }
         });
-        LinearLayout ttypbtn = (LinearLayout) findViewById(R.id.ttypbtn);
+        TextView ttypbtn = (TextView) findViewById(R.id.ttypbtn);
         ttypbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

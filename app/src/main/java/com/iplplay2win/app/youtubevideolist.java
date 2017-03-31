@@ -50,6 +50,7 @@ public class youtubevideolist extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ApplicationAnalytics.getInstance().trackScreenView("YouTube Video List");
 
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);

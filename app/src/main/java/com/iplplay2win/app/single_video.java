@@ -76,6 +76,8 @@ public class single_video extends YouTubeBaseActivity implements YouTubePlayer.O
         Bundle extras = getIntent().getExtras();
 //        if (extras != null && extras.containsKey(KEY_VIDEO_ID)) {
         mVideoId = extras.getString(KEY_VIDEO_ID);
+        ApplicationAnalytics.getInstance().trackScreenView(" Single Video "+mVideoId);
+
 //        }
         /*else {
             finish();

@@ -14,6 +14,8 @@ public class predict_n_win extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ApplicationAnalytics.getInstance().trackScreenView("Match to Predict List");
+
     }
 
 }

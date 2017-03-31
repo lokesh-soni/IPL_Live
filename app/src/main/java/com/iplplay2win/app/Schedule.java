@@ -48,10 +48,10 @@ public class Schedule extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ApplicationAnalytics.getInstance().trackScreenView("Schedule");
 
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
-
         AdView adView=(AdView)findViewById(R.id.adViewSchedule);
         AdRequest adRequest=new AdRequest.Builder().build();
         adView.loadAd(adRequest);
@@ -88,8 +88,8 @@ public class Schedule extends AppCompatActivity {
                 e.printStackTrace();
                 return e.toString();
             }
-            try {
 
+            try {
                 // Setup HttpURLConnection class to send and receive data from php and mysql
                 conn = (HttpURLConnection) url.openConnection();
                 //conn.setReadTimeout(READ_TIMEOUT);

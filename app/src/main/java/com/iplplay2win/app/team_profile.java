@@ -53,6 +53,7 @@ Context context;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ApplicationAnalytics.getInstance().trackScreenView("Team Profile");
 
         //BANNER
         MobileAds.initialize(getApplicationContext(),"ca-app-pub-4161588401571941/6846945512");

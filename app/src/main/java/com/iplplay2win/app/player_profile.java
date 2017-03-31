@@ -55,7 +55,6 @@ public class player_profile extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
@@ -68,6 +67,8 @@ public class player_profile extends AppCompatActivity {
             playerid = Integer.parseInt(extras.getString("PlayerID"));
             Log.e("PlayerID", playerid + "");
         }
+        ApplicationAnalytics.getInstance().trackScreenView("Player Profile "+playerid);
+
         new AsyncFetch().execute();
     }
     private class AsyncFetch extends AsyncTask<String, String, String> {

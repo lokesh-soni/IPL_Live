@@ -62,6 +62,9 @@ public class team extends AppCompatActivity {
         Intent intent = getIntent();
         String select_title = intent.getStringExtra("Select Title");
         toolbar.setTitle(select_title);
+
+        ApplicationAnalytics.getInstance().trackScreenView("Team");
+
         //Make call to AsyncTask
         new AsyncFetch().execute();
 
