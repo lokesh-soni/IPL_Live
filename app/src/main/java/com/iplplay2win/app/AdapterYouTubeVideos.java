@@ -62,11 +62,20 @@ public class AdapterYouTubeVideos  extends RecyclerView.Adapter<RecyclerView.Vie
         myHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-////                Intent teamdetails = new Intent(context,team_profile.class);class
-//                Intent videointent = new Intent(context,single_videos.class);
-//                videointent.putExtra("KEY_VIDEO_ID", current.thumbnail);
-//                context.startActivity(videointent);
-                context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v="+current.thumbnail)));
+
+                Intent lightboxIntent = new Intent(context, single_video.class);
+                lightboxIntent.putExtra(single_video.KEY_VIDEO_ID, current.thumbnail);
+                context.startActivity(lightboxIntent);
+            }
+
+        });
+        myHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent lightboxIntent = new Intent(context, single_video.class);
+                lightboxIntent.putExtra(single_video.KEY_VIDEO_ID, current.thumbnail);
+                context.startActivity(lightboxIntent);
+                return false;
             }
         });
     }

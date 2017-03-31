@@ -11,5 +11,5 @@ public class Urls {
     public static final String URL_PLAYERS_LIST_TEAMS="http://www.api.iplplay2win.in/v1/players/all";
     public static final String URL_PLAYER_INFO = "http://www.api.iplplay2win.in/v1/players/all/basic/";
     public static final String URL_VIDEO_LIST = "http://www.api.iplplay2win.in/v1/videos/all";
-
+    public static final String ADMOB_CODE = "ca-app-pub-4161588401571941/6846945512";
 }

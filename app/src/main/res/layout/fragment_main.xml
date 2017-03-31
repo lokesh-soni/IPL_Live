@@ -159,7 +159,7 @@
             android:id="@+id/exchangeurticket"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Get your Tickets Exchanges!"
+            android:text="Get your Tickets Exchange"
             android:textSize="16sp"
             android:padding="16dp"
             android:clickable="true"

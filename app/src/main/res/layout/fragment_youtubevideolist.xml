@@ -6,11 +6,14 @@
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context="com.iplplay2win.app.youtubevideolistFragment"
-    tools:showIn="@layout/activity_youtubevideolist">
+    tools:showIn="@layout/activity_youtubevideolist"
+    android:background="@color/colorPrimary">
 <android.support.v7.widget.RecyclerView
     android:id="@+id/RVYouTubeList"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="60dp">
 
 </android.support.v7.widget.RecyclerView>
 

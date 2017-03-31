@@ -57,7 +57,7 @@ public class player_profile extends AppCompatActivity {
 
 
         //BANNER
-        MobileAds.initialize(getApplicationContext(),"ca-app-pub-4161588401571941/6846945512");
+        MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
         AdView adView=(AdView)findViewById(R.id.adViewPlayers);
         AdRequest adRequest=new AdRequest.Builder().build();

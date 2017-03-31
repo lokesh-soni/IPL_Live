@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.android.volley.AuthFailureError;
@@ -29,6 +30,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator;
+
 public class youtubevideolist extends AppCompatActivity {
 
     ArrayList<YouTubeData> list;
@@ -48,7 +52,7 @@ public class youtubevideolist extends AppCompatActivity {
 
 
         //BANNER
-        MobileAds.initialize(getApplicationContext(),"ca-app-pub-4161588401571941/6846945512");
+        MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
         AdView adView=(AdView)findViewById(R.id.adViewYoutube);
         AdRequest adRequest=new AdRequest.Builder().build();
@@ -80,20 +84,24 @@ public class youtubevideolist extends AppCompatActivity {
                                 list.add(youTubeData);
                             }
                             rv=(RecyclerView)findViewById(R.id.RVYouTubeList);
+                            rv.setItemAnimator(new ScaleInTopAnimator());
+
                             adapter=new AdapterYouTubeVideos(youtubevideolist.this,list);
-                            rv.setAdapter(adapter);
+                            rv.setAdapter(new ScaleInAnimationAdapter(adapter));
                             rv.setLayoutManager(new LinearLayoutManager(youtubevideolist.this));
                             hidepDialog();
 
-
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("JSONException", "onPostExecute:"+e.toString()+"" );
+
                         }
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("YouTube Volley Request", "onErrorResponse: "+error+"" );
                 hidepDialog();
             }
         }){

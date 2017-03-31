@@ -53,7 +53,7 @@ public class team extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //BANNER
-        MobileAds.initialize(getApplicationContext(),"ca-app-pub-4161588401571941/6846945512");
+        MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
         AdView adView=(AdView)findViewById(R.id.adViewTeam);
         AdRequest adRequest=new AdRequest.Builder().build();
@@ -174,8 +174,6 @@ public class team extends AppCompatActivity {
 
                     data.add(teamData);
                 }
-
-                Log.e("data count", data.size()+"");
 
                 // Setup and Handover data to recyclerview
                 mTeamRV = (RecyclerView)findViewById(R.id.teamRV);
