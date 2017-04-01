@@ -22,7 +22,7 @@ android {
     buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "com.iplplay2win.app"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 25
         versionCode 11
         versionName "1.5.36"
@@ -54,6 +54,7 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
     compile 'com.google.android.gms:play-services-analytics:10.2.1'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.20.0'
     compile 'com.google.android.gms:play-services-ads:10.2.1'
     testCompile 'junit:junit:4.12'
 }

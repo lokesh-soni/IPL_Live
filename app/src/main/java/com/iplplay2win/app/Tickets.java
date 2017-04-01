@@ -24,6 +24,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.InterstitialAd;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -51,7 +56,7 @@ import static android.R.attr.dialogLayout;
 
 public class Tickets extends AppCompatActivity {
 
-
+    InterstitialAd mInterstitialAd;
 
     TextView tv_name,tv_phone,ihave,iwant;
 
@@ -74,6 +79,25 @@ public class Tickets extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");
+
+        mInterstitialAd = new InterstitialAd(this);
+
+        // set the ad unit ID
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
+
 //        //BANNER
 //        MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 //
@@ -91,7 +115,6 @@ public class Tickets extends AppCompatActivity {
         pDiaolg.setCancelable(true);
 
         ticketList=new ArrayList<>();
-
 
         spinner_nav = (Spinner) findViewById(R.id.spinner_nav);
 
@@ -280,4 +303,10 @@ public class Tickets extends AppCompatActivity {
         finish();
         return true;
     }
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
+
 }

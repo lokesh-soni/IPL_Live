@@ -35,10 +35,10 @@ public class NextPage extends AppCompatActivity {
     EditText name,phone,iwant,ihave;
     Button cancel,exchange;
 
-    public static final String KEY_USERNAME="name";
+    /*public static final String KEY_USERNAME="name";
     public static final String KEY_PHONE="phone";
     public static final String KEY_IWANT="iwant";
-    public static final String KEY_IHAVE="ihave";
+    public static final String KEY_IHAVE="ihave";*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +53,12 @@ public class NextPage extends AppCompatActivity {
         cancel = (Button) findViewById(R.id.btnCancel);
         exchange = (Button) findViewById(R.id.btnExchange);
 
+
+
         sp=(Spinner)findViewById(R.id.sp_match);
 
         ArrayList<String> list = new ArrayList<String>();
-        list.add("All");
+        list.add("Select Match Venue");
         list.add("Kolkata");
         list.add("Chennai");
         list.add("Punjab");
@@ -64,6 +66,7 @@ public class NextPage extends AppCompatActivity {
         list.add("Hyderabad");
         list.add("Pune");
         list.add("Mumbai");
+        list.add("Delhi");
 
         // Custom ArrayAdapter with spinner item layout to set popup background
 
@@ -78,11 +81,20 @@ public class NextPage extends AppCompatActivity {
         exchange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userLogin();
+                register();
+
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
     }
+
 
     private void userLogin() {
 
@@ -95,7 +107,7 @@ public class NextPage extends AppCompatActivity {
                     public void onResponse(String response) {
                         // System.out.println("Volley String Response----" + response.toString());
 
-                        Toast.makeText(NextPage.this, response.toString(), Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(NextPage.this, response.toString(), Toast.LENGTH_LONG).show();
                         openProfile();
                         hidepDialog();
                     }
@@ -140,5 +152,40 @@ public class NextPage extends AppCompatActivity {
     private void hidepDialog(){
         if(pDialog.isShowing())
             pDialog.dismiss();
+    }
+    public void register(){
+        initialize();
+        if(!validate()){
+            Toast.makeText(this,"Please Enter All Fields Correctly",Toast.LENGTH_LONG).show();
+        }else{
+            userLogin();
+        }
+    }
+    public boolean validate(){
+        boolean valid=true;
+        if(name.getText().toString().isEmpty()){
+            name.setError("Please Enter Valid Name");
+            valid=false;
+        }
+        if(phone.getText().toString().isEmpty() || phone.length()==10){
+            phone.setError("Please Enter Valid 10 Digit Number");
+            valid=false;
+        }
+        if(iwant.getText().toString().isEmpty()){
+            iwant.setError("Please Enter What You Want");
+            valid=false;
+        }
+        if(ihave.getText().toString().isEmpty()){
+            ihave.setError("Please Enter what you have");
+            valid=false;
+        }
+
+        return valid;
+    }
+    public void initialize(){
+        name.getText().toString();
+        phone.getText().toString();
+        iwant.getText().toString();
+        ihave.getText().toString();
     }
 }

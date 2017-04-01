@@ -17,7 +17,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="220dp"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -27,85 +27,89 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         app:cardCornerRadius="8dp"
-        app:contentPadding="8dp"
-        android:layout_margin="8dp"
+        app:contentPadding="4dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         app:layout_anchor="@id/app_bar_layout"
-        app:layout_anchorGravity="bottom|right|end"
-        >
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/matchno_predict"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.2"
-        android:text="Match 24"
-        android:textSize="16sp"/>
+        app:layout_anchorGravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:padding="16dp"
-            android:layout_margin="2dp">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_weight="0.2">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
-                <TextView
-                    android:id="@+id/teama_p2w"
+            <TextView
+                android:id="@+id/matchno_predict"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="Match 24"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                android:padding="16dp"
+                android:layout_margin="2dp">
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAllCaps="true"
-                    android:text="KKR"
-                    android:textSize="48sp"
-                    android:textColor="@color/cardview_dark_background"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="0.2">
+
+                    <TextView
+                        android:id="@+id/teama_p2w"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:text="KKR"
+                        android:textSize="48sp"
+                        android:textColor="@color/cardview_dark_background"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_weight="0.6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="30sp"
+                    android:text="VS"
+                    android:textColor="@color/colorPrimaryDark"/>
+                <LinearLayout
+                    android:layout_weight="0.2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/teamb_p2w"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:text="rcb"
+                        android:textSize="48sp"
+                        android:textColor="@color/cardview_dark_background"/>
+                </LinearLayout>
+
             </LinearLayout>
             <TextView
-                android:layout_weight="0.6"
+                android:id="@+id/ma_predict"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="30sp"
-                android:text="VS"
-                android:textColor="@color/colorPrimaryDark"/>
-            <LinearLayout
-                android:layout_weight="0.2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:drawableLeft="@drawable/ic_location"
+                android:text="Eden Gardens, Kolkata"/>
 
-                <TextView
-                    android:id="@+id/teamb_p2w"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAllCaps="true"
-                    android:text="rcb"
-                    android:textSize="48sp"
-                    android:textColor="@color/cardview_dark_background"/>
-            </LinearLayout>
-
-</LinearLayout>
-    <TextView
-        android:id="@+id/ma_predict"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.8"
-        android:drawableLeft="@drawable/ic_location"
-        android:text="Eden Gardens, Kolkata"/>
-
-</LinearLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

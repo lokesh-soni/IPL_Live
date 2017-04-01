@@ -11,6 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,6 +46,7 @@ public class youtubevideolist extends AppCompatActivity {
     private RecyclerView rv;
     private AdapterYouTubeVideos adapter;
 
+    InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +57,35 @@ public class youtubevideolist extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");
+
+        mInterstitialAd = new InterstitialAd(this);
+
+        // set the ad unit ID
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
+
+
         ApplicationAnalytics.getInstance().trackScreenView("YouTube Video List");
 
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
         AdView adView=(AdView)findViewById(R.id.adViewYoutube);
-        AdRequest adRequest=new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        AdRequest aRequest=new AdRequest.Builder().build();
+        adView.loadAd(aRequest);
 
         list=new ArrayList<>();
         pDialog=new ProgressDialog(youtubevideolist.this);
@@ -130,4 +158,12 @@ public class youtubevideolist extends AppCompatActivity {
             pDialog.dismiss();
         }
     }
+
+
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
+
 }

@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
         p2wbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent p2w= new Intent(MainActivity.this,p2w.class);
-//                startActivity(p2w);
-                Toast.makeText(MainActivity.this, "Our New Feature, Wait for IPL matches",
-                        Toast.LENGTH_LONG).show();
+                Intent p2w= new Intent(MainActivity.this,login.class);
+                startActivity(p2w);
+//                Toast.makeText(MainActivity.this, "Our New Feature, Wait for IPL matches",
+//                        Toast.LENGTH_LONG).show();
             }
         });
         TextView ttypbtn = (TextView) findViewById(R.id.ttypbtn);

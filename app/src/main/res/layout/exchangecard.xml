@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="4dp"
+    android:layout_marginLeft="8dip"
+    android:layout_marginRight="8dip"
+    android:layout_marginBottom="4dip"
+    android:layout_marginTop="4dip"
     app:contentPadding="8dp"
     app:cardCornerRadius="4dp">
 
@@ -19,7 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="4dp"
             android:weightSum="1">
             <TextView
@@ -55,14 +58,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I have"
-            android:textSize="22sp"
+            android:textSize="20sp"
             />
 <TextView
     android:id="@+id/tv_ihave"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="50dp"
+    android:minHeight="30dp"
+    android:textSize="20sp"
     android:textColor="@color/cardview_dark_background"/>
+
         <View
             android:layout_below="@id/tv_name"
             android:layout_width="match_parent"
@@ -74,13 +79,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I want"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
         <TextView
             android:id="@+id/tv_iwant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="50dp"
+            android:minHeight="30dp"
+            android:textSize="20sp"
             android:textColor="@color/cardview_dark_background"/>
-
+        <View
+            android:layout_below="@id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="#e1e1e1"/>
+        <TextView
+            android:id="@+id/exchangersplace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_location"
+            android:padding="4dp"
+            android:textSize="18sp"
+            />
     </LinearLayout>
 </android.support.v7.widget.CardView>

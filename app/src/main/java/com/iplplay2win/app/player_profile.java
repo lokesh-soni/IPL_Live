@@ -19,6 +19,10 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.InterstitialAd;
+
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +36,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class player_profile extends AppCompatActivity {
+
+    InterstitialAd mInterstitialAd;
 
     Context context;
 
@@ -55,6 +61,14 @@ public class player_profile extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
+
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");
+
+        inter();
+
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
@@ -71,6 +85,37 @@ public class player_profile extends AppCompatActivity {
 
         new AsyncFetch().execute();
     }
+
+
+
+    public void inter(){
+
+
+
+        mInterstitialAd = new InterstitialAd(this);
+
+        // set the ad unit ID
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
+
+    }
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
+
     private class AsyncFetch extends AsyncTask<String, String, String> {
         ProgressDialog pdLoading = new ProgressDialog(player_profile.this);
         HttpURLConnection conn;
@@ -240,5 +285,6 @@ public class player_profile extends AppCompatActivity {
         }
 
     }
+
 
 }
