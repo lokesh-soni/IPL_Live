@@ -61,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
         exchangeticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Our New Feature, Wait for IPL matches",
-                        Toast.LENGTH_LONG).show();
+                Intent tickets= new Intent(MainActivity.this,Tickets.class);
+                startActivity(tickets);
+//                Toast.makeText(MainActivity.this, "Our New Feature, Wait for IPL matches",
+//                        Toast.LENGTH_LONG).show();
             }
         });
         TextView schedulebtn = (TextView) findViewById(R.id.schedulebtn);

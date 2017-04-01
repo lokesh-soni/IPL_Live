@@ -24,6 +24,7 @@
         <item name="android:textColor">@color/cardview_dark_background</item>
 
     </style>
+
     <style name="AppTheme.Translucent" parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>

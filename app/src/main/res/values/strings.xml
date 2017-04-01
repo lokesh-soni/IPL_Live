@@ -15,4 +15,5 @@
     <!--<string name="title_activity_youtubevideos">Exciting YouTube Videos</string>-->
     <string name="DEVELOPER_KEY">AIzaSyDQehV0CTkMsYPw-AsibspMoBkFF7Cwrck</string>
     <string name="banner_ad_unit_id">ca-app-pub-4161588401571941/6846945512</string>
+    <string name="title_activity_tickets">Exchange Tickets.</string>
 </resources>
