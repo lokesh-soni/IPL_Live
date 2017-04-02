@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,19 +37,24 @@ import java.util.Map;
 public class p2w extends AppCompatActivity {
 
     ArrayList <String> list;
-    ProgressDialog pDialog;
-    String predictscheduleURL="http://www.api.iplplay2win.in/v1/schedule/292";
-    public static final String postPredictdataURL="http://www.api.iplplay2win.in/v1/predict/create/1";
+    ArrayAdapter<String> arrayAdapter;
 
-    public static final String statusURL="http://www.api.iplplay2win.in/v1/predict/user/";
+    ProgressDialog pDialog;
+    String predictscheduleURL="http://www.api.iplplay2win.in/v1/schedule/";
+
+    String postPredictdataURL="http://www.api.iplplay2win.in/v1/predict/create";
+
+    String statusURL="http://www.api.iplplay2win.in/v1/predict/user/";
+
+    String teamplayerslist="http://www.api.iplplay2win.in/v1/players/all/";
 
     LinearLayout predict_winner , predict_mom, predict_hwt, predict_hrg;
     TextView teamA,teamB,matchNo,place1;
     TextView mPredictedWinningTeam,mPredictedMomPlayer,
             mPredictedHwtPlayer,mPredictedHrgPlayer;
     Button reset,submit_prediction;
-    String useremail;
-
+    String useremail,scheduleid;
+    String team_B_logo, team_A_short_name, team_B_short_name, day, place, stadium, team_A_logo, schedule_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +62,12 @@ public class p2w extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Bundle extras = getIntent().getExtras();
+        scheduleid = extras.getString("SCHEDULEID");
+        useremail = extras.getString("EMAIL");
+
+        predictscheduleURL= predictscheduleURL+scheduleid;
 
         ApplicationAnalytics.getInstance().trackScreenView("P2W");
 
@@ -106,7 +118,19 @@ public class p2w extends AppCompatActivity {
         predict_mom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  selectteamoption(predict_mom,mPredictedMomPlayer);
+                selectteamoption(predict_mom,mPredictedMomPlayer);
+            }
+        });
+        predict_hrg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectteamoption(predict_hrg,mPredictedHrgPlayer);
+            }
+        });
+        predict_hwt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectteamoption(predict_hwt,mPredictedHwtPlayer);
             }
         });
 
@@ -127,21 +151,21 @@ public class p2w extends AppCompatActivity {
 
                         try {
                             JSONObject jsonObject = response.getJSONObject("schedule");
-                            String schedule_id = jsonObject.getString("schedule_id");
-                            String team_A_logo = jsonObject.getString("team_A_logo");
-                            String team_B_logo = jsonObject.getString("team_B_logo");
-                            String team_A_short_name = jsonObject.getString("team_A_short_name");
-                            String team_B_short_name = jsonObject.getString("team_B_short_name");
-                            String day = jsonObject.getString("day");
-                            String place = jsonObject.getString("place");
-                            String stadium = jsonObject.getString("stadium");
+                            schedule_id = jsonObject.getString("schedule_id");
+                            team_A_logo = jsonObject.getString("team_A_logo");
+                            team_B_logo = jsonObject.getString("team_B_logo");
+                            team_A_short_name = jsonObject.getString("team_A_short_name");
+                            team_B_short_name = jsonObject.getString("team_B_short_name");
+                            day = jsonObject.getString("day");
+                            place = jsonObject.getString("place");
+                            stadium = jsonObject.getString("stadium");
 
                             teamA.setText(team_A_short_name);
                             teamB.setText(team_B_short_name);
                             matchNo.setText(day);
                             place1.setText(stadium+", "+place );
 
-                            belowLayout(schedule_id,useremail);
+                            makeStatusUrl(schedule_id,useremail);
 
                         }
                         catch (JSONException e1) {
@@ -194,8 +218,10 @@ public class p2w extends AppCompatActivity {
                 R.layout.dialog_list);
         
         //// TODO: 01-04-2017  Make arrayAdapter Dynamic 
-        arrayAdapter.add("Kolkata Knight Rider");
-        arrayAdapter.add("Royal Challenger Bangalore");
+//        arrayAdapter.add("Kolkata Knight Rider");
+//        arrayAdapter.add("Royal Challenger Bangalore");
+        arrayAdapter.add(team_A_short_name);
+        arrayAdapter.add(team_B_short_name);
 
         builderSingle.setAdapter(
                 arrayAdapter,
@@ -212,62 +238,72 @@ public class p2w extends AppCompatActivity {
 
         builderSingle.show();
     }
-//    private void selectteamoption(LinearLayout LL, final TextView itemText) {
+
+private void selectteamoption(final LinearLayout clickeditem, final TextView itemText) {
+
+    android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(p2w.this);
+
+    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+            p2w.this,
+            R.layout.dialog_list);
+
+    //// TODO: 01-04-2017  Make arrayAdapter Dynamic
+
+    arrayAdapter.add(team_A_short_name);
+    arrayAdapter.add(team_B_short_name);
+
+    builderSingle.setAdapter(
+            arrayAdapter,
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which ) {
+//                    String teamselected = arrayAdapter.getItem(which);
+//                    itemText.setText(teamselected);
+//                    itemText.setVisibility(View.VISIBLE);
+//                    Toast.makeText(p2w.this, teamselected+" Selected", Toast.LENGTH_SHORT).show();
+                    String teamselect= arrayAdapter.getItem(which);
+                    Log.e("TeamSelected", "onClick:"+ teamselect );
+                    selectteamplayer(clickeditem,itemText,teamselect);
+                    dialog.dismiss();
+                }
+            });
+
+    builderSingle.show();
+}
+
+    private void selectteamplayer(final LinearLayout clickedteam, final TextView itemText,final String team) {
+
+        android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(p2w.this);
+
+        arrayAdapter = new ArrayAdapter<String>(
+                p2w.this,
+                R.layout.dialog_list);
+
+        //// TODO: 02-04-2017  Make arrayAdapter Dynamic with getting which
+        maketeamlistrequest(team);
+
 //
-//        android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(p2w.this);
-//
-//        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-//                p2w.this,
-//                R.layout.dialog_list);
 //        arrayAdapter.add("Kolkata Knight Rider");
 //        arrayAdapter.add("Royal Challenger Bangalore");
-//
-//        builderSingle.setAdapter(
-//                arrayAdapter,
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which ) {
-//
-//
-//
-//                        String teamselected = arrayAdapter.getItem(which);
-//
-//                        teamplayersoption(teamselected,itemText);
-////                        itemText.setText(teamselected);
-////                        itemText.setVisibility(View.VISIBLE);
-////                        Toast.makeText(p2w.this, teamselected +" Selected", Toast.LENGTH_SHORT).show();
-////                        dialog.dismiss();
-//                    }
-//                });
-//
-//        builderSingle.show();
-//    }
-//
-//    private void teamplayersoption(String teamid, final TextView itemText) {
-//
-//        android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(p2w.this);
-//
-//        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-//                p2w.this,
-//                R.layout.dialog_list);
-//        arrayAdapter.add("Gautam Gambhir");
-//        arrayAdapter.add("Virat Kohli");
-//
-//        builderSingle.setAdapter(
-//                arrayAdapter,
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which ) {
-//                        String teamselected = arrayAdapter.getItem(which);
-//                        itemText.setText(teamselected);
-//                        itemText.setVisibility(View.VISIBLE);
-//                        Toast.makeText(p2w.this, teamselected +" Selected", Toast.LENGTH_SHORT).show();
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//        builderSingle.show();
-//    }
+
+
+
+        builderSingle.setAdapter(
+                arrayAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int player ) {
+                    String teamselected = arrayAdapter.getItem(player);
+                    itemText.setText(teamselected);
+                    itemText.setVisibility(View.VISIBLE);
+                    Toast.makeText(p2w.this, teamselected+" Selected", Toast.LENGTH_SHORT).show();
+//                        selectteamplayer(clickedteam,itemText);
+                        dialog.dismiss();
+                    }
+                });
+
+        builderSingle.show();
+    }
 
     private void showpDialog(){
         if(!pDialog.isShowing())
@@ -278,9 +314,10 @@ public class p2w extends AppCompatActivity {
             pDialog.dismiss();
         }
     }
-    public void makeStatusUrl(){
+    public void makeStatusUrl(String scheduleid ,String userid){
 
         hidepDialog();
+        statusURL= statusURL+userid+"/"+scheduleid;
 
 
         JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, statusURL, null,
@@ -289,21 +326,19 @@ public class p2w extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
 
                         try {
-                            response.getString("status");
+                            //response.getString("status");
                             JSONObject jsonObject = response.getJSONObject("predict");
-                            String useremail = jsonObject.getString("useremail");
-                            String scheduleid = jsonObject.getString("scheduleid");
+//                            String useremail = jsonObject.getString("useremail");
+//                            String scheduleid = jsonObject.getString("scheduleid");
                             String predictwinner = jsonObject.getString("predictwinner");
                             String predictmom = jsonObject.getString("predictmom");
                             String prediumhrg = jsonObject.getString("prediumhrg");
                             String predictswt = jsonObject.getString("predictswt");
 
-
                             mPredictedWinningTeam.setText(predictwinner);
                             mPredictedMomPlayer.setText(predictmom);
                             mPredictedHrgPlayer.setText(prediumhrg);
                             mPredictedHwtPlayer.setText(predictswt);
-
 
                         }
                         catch (JSONException e1) {
@@ -313,6 +348,7 @@ public class p2w extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
                 hidepDialog();
             }
         }) {
@@ -331,17 +367,17 @@ public class p2w extends AppCompatActivity {
         requestQueue.add(jsonreq);
 
     }
-    public void belowLayout(String scheduleid ,String userid){
+
+    public void belowLayout(){
         hidepDialog();
 
-
-        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, predictscheduleURL, null,
+        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, statusURL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
 
                         try {
-                            JSONObject jsonObject = response.getJSONObject("schedule");
+                            JSONObject jsonObject = response.getJSONObject("predict");
                             String schedule_id = jsonObject.getString("schedule_id");
                             String team_A_logo = jsonObject.getString("team_A_logo");
                             String team_B_logo = jsonObject.getString("team_B_logo");
@@ -356,7 +392,6 @@ public class p2w extends AppCompatActivity {
                             mPredictedHrgPlayer.setText(day);
                             mPredictedHwtPlayer.setText(stadium+", "+place );
 
-
                         }
                         catch (JSONException e1) {
                             e1.printStackTrace();
@@ -383,8 +418,10 @@ public class p2w extends AppCompatActivity {
         requestQueue.add(jsonreq);
 
     }
+
     private void postpredictdata() {
         // TODO: 01-04-2017 Add POST method to set or clear texts.
+
         showpDialog();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, postPredictdataURL,
@@ -392,10 +429,8 @@ public class p2w extends AppCompatActivity {
 
                     @Override
                     public void onResponse(String response) {
-                        // System.out.println("Volley String Response----" + response.toString());
 
-                        Toast.makeText(p2w.this, response.toString(), Toast.LENGTH_LONG).show();
-                       // openProfile();
+                        Log.e("POST PREDICT DATA", "onResponse: "+ response );
                         hidepDialog();
                     }
                 },
@@ -414,8 +449,8 @@ public class p2w extends AppCompatActivity {
                 map.put("predictmom", mPredictedMomPlayer.getText().toString());
                 map.put("prediumhrg",mPredictedHrgPlayer.getText().toString());
                 map.put("predictswt",mPredictedHwtPlayer.getText().toString());
-//                map.put("userid",userid);
-//                map.put("scheduleid",scheduleid );
+                map.put("userid",useremail);
+                map.put("scheduleid",scheduleid );
                 return map;
             }
             @Override
@@ -427,4 +462,60 @@ public class p2w extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    public void maketeamlistrequest(String teamshortname){
+
+        hidepDialog();
+        teamplayerslist= teamplayerslist+teamshortname;
+
+        //teamplayerslist= teamplayerslist+6;
+
+
+        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, teamplayerslist, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            //response.getString("status");
+                            JSONArray jArray = response.optJSONArray("players");
+
+                            for(int i=0;i<jArray.length();i++){
+                                JSONObject json_data = jArray.getJSONObject(i);
+//                                Team_ProfileData team_profileData = new Team_ProfileData();
+//                                team_profileData.player_image= json_data.getString("player_image");
+                               String playerslist = json_data.getString("player_name");
+//                                team_profileData.playerid=json_data.getString("player_id");
+
+                                arrayAdapter.add(playerslist);
+
+//                                return arrayAdapter.add(playerslist);
+                            }
+
+                        }
+                        catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                hidepDialog();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded";
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(p2w.this);
+        requestQueue.add(jsonreq);
+
+    }
     }

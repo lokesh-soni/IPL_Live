@@ -43,6 +43,7 @@ public class team extends AppCompatActivity {
     public static final int READ_TIMEOUT = 15000;
     private RecyclerView mTeamRV;
     private AdapterTeam mTeamAdapter;
+    String select_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,10 @@ public class team extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Bundle extras = getIntent().getExtras();
+        select_title = extras.getString("SelectTitle");
+        getSupportActionBar().setTitle(select_title);
+
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
@@ -59,9 +64,8 @@ public class team extends AppCompatActivity {
         AdRequest adRequest=new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
-        Intent intent = getIntent();
-        String select_title = intent.getStringExtra("Select Title");
-        toolbar.setTitle(select_title);
+
+
 
         ApplicationAnalytics.getInstance().trackScreenView("Team");
 

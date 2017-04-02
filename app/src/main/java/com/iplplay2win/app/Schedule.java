@@ -39,6 +39,8 @@ public class Schedule extends AppCompatActivity {
     public static final int READ_TIMEOUT = 15000;
     private RecyclerView mScheduleRV;
     private AdapterSchedule mAdapter;
+    String select_title;
+    String scheduleid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,11 @@ public class Schedule extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ApplicationAnalytics.getInstance().trackScreenView("Schedule");
+        Bundle extras = getIntent().getExtras();
+        select_title = extras.getString("SCHEDULE");
+        getSupportActionBar().setTitle(select_title);
+
+        ApplicationAnalytics.getInstance().trackScreenView("SCHEDULE :"+select_title);
 
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
@@ -160,6 +166,7 @@ public class Schedule extends AppCompatActivity {
                 for(int i=0;i<jArray.length();i++){
                     JSONObject json_data = jArray.getJSONObject(i);
                     ScheduleData scheduleData = new ScheduleData();
+                    scheduleid = scheduleData.schedule_id = json_data.getString("schedule_id");
                     scheduleData.teamAlogo= json_data.getString("team_A_logo");
                     scheduleData.teamBlogo= json_data.getString("team_B_logo");
                     scheduleData.teamAShort_name= json_data.getString("team_A_short_name");

@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:text="Match 24"
+                android:text="..."
                 android:textSize="16sp"/>
 
             <LinearLayout
@@ -70,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAllCaps="true"
-                        android:text="KKR"
+                        android:text="..."
                         android:textSize="48sp"
                         android:textColor="@color/cardview_dark_background"/>
                 </LinearLayout>
@@ -95,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAllCaps="true"
-                        android:text="rcb"
+                        android:text="..."
                         android:textSize="48sp"
                         android:textColor="@color/cardview_dark_background"/>
                 </LinearLayout>
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
                 android:drawableLeft="@drawable/ic_location"
-                android:text="Eden Gardens, Kolkata"/>
+                android:text="..."/>
 
         </LinearLayout>
 

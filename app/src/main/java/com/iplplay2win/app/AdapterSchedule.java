@@ -1,6 +1,7 @@
 package com.iplplay2win.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class AdapterSchedule extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         // Get current position of item in recyclerview to bind data and assign values from list
         MyHolder myHolder= (MyHolder) holder;
-        ScheduleData current=data.get(position);
+        final ScheduleData current=data.get(position);
         myHolder.Date.setText(current.date);
         myHolder.Day.setText(current.day);
         myHolder.Time.setText(current.time);
@@ -50,15 +51,22 @@ public class AdapterSchedule extends RecyclerView.Adapter<RecyclerView.ViewHolde
         myHolder.TeamAShort_Name.setText(current.teamAShort_name);
         myHolder.TeamBShort_Name.setText(current.teamBShort_name);
 
-
-
         // load image into imageview using glide
         Glide.with(context).load(current.teamAlogo)
-                .placeholder(R.drawable.ic_img_placeholder)
+                .placeholder(R.color.cardview_light_background)
                 .into(myHolder.teamAlogo);
         Glide.with(context).load(current.teamBlogo)
-                .placeholder(R.drawable.ic_img_placeholder)
+                .placeholder(R.color.cardview_light_background)
                 .into(myHolder.teamBlogo);
+
+       myHolder.predictcta.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent predictcall = new Intent(context,login.class);
+               predictcall.putExtra("SCHEDULEID",current.schedule_id);
+               context.startActivity(predictcall);
+           }
+       });
     }
 
     @Override
@@ -69,6 +77,7 @@ public class AdapterSchedule extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private class MyHolder extends RecyclerView.ViewHolder {
         ImageView teamAlogo, teamBlogo;
         TextView Day, Time, Place, Date, TeamAShort_Name, TeamBShort_Name;
+        TextView predictcta;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -83,6 +92,7 @@ public class AdapterSchedule extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Time =(TextView) itemView.findViewById(R.id.match_time);
             Date =(TextView) itemView.findViewById(R.id.match_date);
             Place =(TextView) itemView.findViewById(R.id.place_schedule);
+            predictcta = (TextView) itemView.findViewById(R.id.predictcta);
         }
     }
 }

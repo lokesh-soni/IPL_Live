@@ -6,6 +6,6 @@ package com.iplplay2win.app;
 
 class ScheduleData {
 
-    String teamAlogo, teamBlogo,teamAShort_name,teamBShort_name,day,time,place,date;
+    String schedule_id, teamAlogo, teamBlogo,teamAShort_name,teamBShort_name,day,time,place,date;
 
     }

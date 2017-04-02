@@ -18,4 +18,5 @@
     <string name="title_activity_tickets">Exchange Tickets.</string>
     <string name="facebook_app_id">1664236843872280</string>
     <string name="interstitial_ad_unit_id">ca-app-pub-4161588401571941/2137544315</string>
+    <string name="action_exchange">Exchange</string>
 </resources>

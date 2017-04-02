@@ -1,7 +1,9 @@
 package com.iplplay2win.app;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,12 +30,14 @@ import org.json.JSONObject;
 
 public class login extends AppCompatActivity {
 
+    public static final String MyPREFERENCES = "LOGINPrefs" ;
     LoginButton loginButton;
     TextView textView;
     CallbackManager callbackManager;
     String full_name = "";
     String fb_id = "";
-    String email;
+    String email,scheduleid;
+    SharedPreferences sharedpreferences;
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -145,15 +149,20 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
        // FacebookSdk.sdkInitialize(getApplicationContext());
-    callbackManager = CallbackManager.Factory.create();
+
+        Bundle extras = getIntent().getExtras();
+        scheduleid = extras.getString("SCHEDULEID");
+
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        callbackManager = CallbackManager.Factory.create();
 
     LoginButton loginButton = (LoginButton) findViewById(R.id.fb_login_btn);
     final TextView textView = (TextView) findViewById(R.id.text);
-
+        if (!isLoggedIn()){
     String[] permissionList = {"public_profile", "email"};
-        loginButton.setReadPermissions(permissionList);
+    loginButton.setReadPermissions(permissionList);
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+    loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
             Log.e("Login Result", loginResult.getAccessToken().getToken());
@@ -169,6 +178,10 @@ public class login extends AppCompatActivity {
                             // Application code
                             try {
                                 String email = object.getString("email");
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putString("LOGIN",email);
+                                editor.apply();
+
                                 Log.e("TAG", "onCompleted: "+email );
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -176,10 +189,13 @@ public class login extends AppCompatActivity {
                         }
                     });
             Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,email,gender");
+            parameters.putString("fields", "id,name,email");
             request.setParameters(parameters);
             request.executeAsync();
 
+            Intent intentone = new Intent(login.this, p2w.class);
+            startActivity(intentone);
+            finish();
 
 //            Profile fbprofile= Profile.getCurrentProfile();
 //            fb_id= fbprofile.getId();
@@ -189,28 +205,37 @@ public class login extends AppCompatActivity {
 //            textView.setText(loginResult.getAccessToken().getToken()
 //                    + "\n"
 //                    + loginResult.getAccessToken().getUserId().toString());
-            Intent intentone = new Intent(login.this, p2w.class);
-            startActivity(intentone);
-            finish();
 
-            // Received Access Token
-            //03-29 00:26:48.752 22463-22463/com.omnibuz.socialscheduler E/LoginÂ Result: EAACWvjWaoKABALOtZAXk8lKXWkqFe4mZAXhldCtZBCwnc7NC7LeCsfQOzHzpPWkblO4cU7aIZAjI8U4xtZAvaZAZA8JNyUFDys0YfZAB7GnDZA0VzUqUd35QNRwZCM5ZCYqN6CFdN4MAvplXvJiAFIJs3v9LTQPZADmoITKknDA5xviGVzn1wf2ZA1HiSfWpIvpaPTJ6YfZCnBVLnJcJ7oNyLY2K0x
-            //03-29 00:26:48.752 22463-22463/com.omnibuz.socialscheduler E/LoginÂ Result: 1273247562710704
         }
 
         @Override
         public void onCancel() {
             Log.e("Login Result", "Login Cancelled");
-            textView.setText("Login Cancelled");
+           // textView.setText("Login Cancelled");
         }
 
         @Override
         public void onError(FacebookException error) {
             Log.e("Login Result", error.toString());
-            textView.setText(error.toString());
+           // textView.setText(error.toString());
         }
     });
+} else {
+    email = sharedpreferences.getString("LOGIN","email");
+    Log.e("COOL", "onCreate: "+ email );
+    Intent intentone = new Intent(login.this, p2w.class);
+    intentone.putExtra("EMAIL",email);
+    intentone.putExtra("SCHEDULEID",scheduleid);
+    startActivity(intentone);
+    finish();
+
 }
+
+}
+    public boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

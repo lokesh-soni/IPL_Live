@@ -153,7 +153,7 @@ public class Tickets extends AppCompatActivity {
             //  boolean isSpinnerInitial = false;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String   item = spinnerArrayAdapter.getItem(position).toString();
+                String item = spinnerArrayAdapter.getItem(position);
                 getUrl = "http://www.api.iplplay2win.in/v1/exchange";
 
                 // Showing selected spinner item

@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +34,7 @@ public class NextPage extends AppCompatActivity {
     ProgressDialog pDialog;
 
     Spinner sp;
+    String item;
 
     EditText name,phone,iwant,ihave;
     Button cancel,exchange;
@@ -50,11 +54,6 @@ public class NextPage extends AppCompatActivity {
         iwant = (EditText) findViewById(R.id.et_i_want);
         ihave = (EditText) findViewById(R.id.et_i_have);
 
-        cancel = (Button) findViewById(R.id.btnCancel);
-        exchange = (Button) findViewById(R.id.btnExchange);
-
-
-
         sp=(Spinner)findViewById(R.id.sp_match);
 
         ArrayList<String> list = new ArrayList<String>();
@@ -70,28 +69,29 @@ public class NextPage extends AppCompatActivity {
 
         // Custom ArrayAdapter with spinner item layout to set popup background
 
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list); //selected item will look like a spinner set from XML
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list); //selected item will look like a spinner set from XML
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp.setAdapter(spinnerArrayAdapter);
+        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            //  boolean isSpinnerInitial = false;
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                item = spinnerArrayAdapter.getItem(position);
 
+                // Showing selected spinner item
+                Toast.makeText(getApplicationContext(), "Selected  : " + item,
+                        Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         pDialog=new ProgressDialog(NextPage.this);
         pDialog.setMessage("Please Wait...");
         pDialog.setCancelable(false);
-
-        exchange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register();
-
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
     }
 
@@ -128,7 +128,7 @@ public class NextPage extends AppCompatActivity {
                 map.put("phone", phone.getText().toString());
                 map.put("iwant",iwant.getText().toString());
                 map.put("ihave",ihave.getText().toString());
-                map.put("place","kolkata");
+                map.put("place",item);
                 return map;
             }
             @Override
@@ -187,5 +187,28 @@ public class NextPage extends AppCompatActivity {
         phone.getText().toString();
         iwant.getText().toString();
         ihave.getText().toString();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_team, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (id){
+            case R.id.action_exchange :
+                register();
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

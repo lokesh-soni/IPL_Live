@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         p2wbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent p2w= new Intent(MainActivity.this,login.class);
+                Intent p2w= new Intent(MainActivity.this,Schedule.class);
+                p2w.putExtra("SCHEDULE","Select Match");
                 startActivity(p2w);
 //                Toast.makeText(MainActivity.this, "Our New Feature, Wait for IPL matches",
 //                        Toast.LENGTH_LONG).show();
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent ttypintent = new Intent(MainActivity.this,team.class);
-//                ttypintent.putExtra("Select Team","Select Team");
+                ttypintent.putExtra("SelectTitle","Select Team");
                 startActivity(ttypintent);
             }
         });
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent scheduleintent = new Intent(MainActivity.this,Schedule.class);
+                scheduleintent.putExtra("SCHEDULE","IPL Schedule");
                 startActivity(scheduleintent);
             }
         });
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent teamintent = new Intent(MainActivity.this,team.class);
+                teamintent.putExtra("SelectTitle","IPL Teams");
                 startActivity(teamintent);
             }
         });

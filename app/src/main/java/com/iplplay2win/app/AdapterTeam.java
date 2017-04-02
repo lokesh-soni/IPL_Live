@@ -59,7 +59,6 @@ class AdapterTeam extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public void onClick(View v) {
                 Intent teamdetails = new Intent(context,team_profile.class);
 
-                //// TODO: 24-03-2017  putExtra ko dang sehe karna hai... Abhi current.TeamID sehe problem ho raha hai. NullPointer Exception Ka
                 try {
                     Log.e("TeamID", "onClick " + current.TeamID);
                     teamdetails.putExtra("Teamid", current.TeamID + "");
