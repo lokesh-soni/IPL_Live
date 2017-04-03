@@ -70,7 +70,7 @@
         <activity
             android:name=".player_profile"
             android:label="@string/title_activity_player_profile"
-            android:parentActivityName=".team"
+            android:parentActivityName=".team_profile"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

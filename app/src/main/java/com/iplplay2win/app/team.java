@@ -54,9 +54,10 @@ public class team extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
-        select_title = extras.getString("SelectTitle");
-        getSupportActionBar().setTitle(select_title);
-
+        if (extras!=null) {
+            select_title = extras.getString("SelectTitle");
+            getSupportActionBar().setTitle(select_title);
+        }
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 

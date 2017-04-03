@@ -61,7 +61,8 @@ public class Tickets extends AppCompatActivity {
     TextView tv_name,tv_phone,ihave,iwant;
 
     ProgressDialog pDiaolg;
-    String getUrl;
+    String getUrl = "http://www.api.iplplay2win.in/v1/exchange";
+
 
 
     RecyclerView ticket_recycler;
@@ -69,6 +70,7 @@ public class Tickets extends AppCompatActivity {
     private ArrayList<TicketModel> ticketList;
 
     Spinner spinner_nav;
+    String item;
 
 
     @Override
@@ -153,13 +155,11 @@ public class Tickets extends AppCompatActivity {
             //  boolean isSpinnerInitial = false;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = spinnerArrayAdapter.getItem(position);
-                getUrl = "http://www.api.iplplay2win.in/v1/exchange";
+                item = spinnerArrayAdapter.getItem(position);
 
                 // Showing selected spinner item
                 Toast.makeText(getApplicationContext(), "Selected  : " + item,
                         Toast.LENGTH_LONG).show();
-                getUrl = getUrl+"/"+item;
 
                 makeStringRequest();
 
@@ -175,7 +175,7 @@ public class Tickets extends AppCompatActivity {
     public void makeStringRequest() {
         hidepDialog();
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, getUrl, null,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, getUrl+"/"+item, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

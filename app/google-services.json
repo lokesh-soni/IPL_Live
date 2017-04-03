@@ -59,6 +59,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "330838229908-7lr6k0i2h17qf3ualfhmmc0k6l9i1dse.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iplplay2win.app",
+            "certificate_hash": "1e83f95bdfef6389dbc3760ecfd95e7d49eae926"
+          }
+        },
+        {
           "client_id": "330838229908-f2ld59ni7voa13r1tcvqqt664i0snj1k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

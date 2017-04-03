@@ -149,7 +149,7 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
        // FacebookSdk.sdkInitialize(getApplicationContext());
-
+        getSupportActionBar().hide();
         Bundle extras = getIntent().getExtras();
         scheduleid = extras.getString("SCHEDULEID");
 
@@ -194,6 +194,8 @@ public class login extends AppCompatActivity {
             request.executeAsync();
 
             Intent intentone = new Intent(login.this, p2w.class);
+            intentone.putExtra("EMAIL",email);
+            intentone.putExtra("SCHEDULEID",scheduleid);
             startActivity(intentone);
             finish();
 

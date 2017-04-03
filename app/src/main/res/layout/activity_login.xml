@@ -18,13 +18,13 @@
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="260dp"
         android:gravity="center"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Predict and Win"
+            android:text="Predict 2 Win"
             android:padding="8dp"
             android:textColor="@color/cardview_light_background"
             android:textSize="28sp"/>
@@ -37,7 +37,7 @@
             android:alpha="0.6"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="Predict for ur favourite team and player and win big suprising gift"/>
+            android:text="Predict Winning Team, Highest Run Getter, MoM, Highest Wicket Taker \n and Win Exciting Prizes "/>
         <com.facebook.login.widget.LoginButton
             android:id="@+id/fb_login_btn"
             android:layout_width="wrap_content"

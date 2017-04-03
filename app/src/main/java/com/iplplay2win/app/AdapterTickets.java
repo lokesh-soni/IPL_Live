@@ -31,6 +31,9 @@ public class AdapterTickets extends RecyclerView.Adapter<AdapterTickets.MyViewHo
     }
     public AdapterTickets(ArrayList<TicketModel> ticketList){
         this.ticketList=ticketList;
+//        ticketList.clear();
+//        ticketList.addAll(ticketList);
+//        notifyDataSetChanged();
     }
 
     @Override

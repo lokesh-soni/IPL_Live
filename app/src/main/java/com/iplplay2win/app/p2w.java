@@ -67,7 +67,7 @@ public class p2w extends AppCompatActivity {
         scheduleid = extras.getString("SCHEDULEID");
         useremail = extras.getString("EMAIL");
 
-        predictscheduleURL= predictscheduleURL+scheduleid;
+       // predictscheduleURL= predictscheduleURL+scheduleid;
 
         ApplicationAnalytics.getInstance().trackScreenView("P2W");
 
@@ -137,12 +137,10 @@ public class p2w extends AppCompatActivity {
        makeStringRequest();
     }
 
-   
-
     public void makeStringRequest() {
         hidepDialog();
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, predictscheduleURL, null,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, predictscheduleURL+scheduleid, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -279,14 +277,10 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
                 p2w.this,
                 R.layout.dialog_list);
 
-        //// TODO: 02-04-2017  Make arrayAdapter Dynamic with getting which
         maketeamlistrequest(team);
 
-//
 //        arrayAdapter.add("Kolkata Knight Rider");
 //        arrayAdapter.add("Royal Challenger Bangalore");
-
-
 
         builderSingle.setAdapter(
                 arrayAdapter,
@@ -317,10 +311,10 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
     public void makeStatusUrl(String scheduleid ,String userid){
 
         hidepDialog();
-        statusURL= statusURL+userid+"/"+scheduleid;
+//        statusURL= statusURL+userid+"/"+scheduleid;
 
 
-        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, statusURL, null,
+        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, statusURL+userid+"/"+scheduleid, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -336,9 +330,21 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
                             String predictswt = jsonObject.getString("predictswt");
 
                             mPredictedWinningTeam.setText(predictwinner);
+                            if (predictwinner != null) {
+                                mPredictedWinningTeam.setVisibility(View.VISIBLE);
+                            }
                             mPredictedMomPlayer.setText(predictmom);
+                            if (predictmom != null) {
+                                mPredictedMomPlayer.setVisibility(View.VISIBLE);
+                            }
                             mPredictedHrgPlayer.setText(prediumhrg);
+                            if (prediumhrg != null) {
+                                mPredictedHrgPlayer.setVisibility(View.VISIBLE);
+                            }
                             mPredictedHwtPlayer.setText(predictswt);
+                            if (predictswt != null) {
+                                mPredictedHwtPlayer.setVisibility(View.VISIBLE);
+                            }
 
                         }
                         catch (JSONException e1) {
@@ -348,7 +354,7 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e("statusURL", "onErrorResponse: "+error );
                 hidepDialog();
             }
         }) {
@@ -424,12 +430,22 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
 
         showpDialog();
 
+
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, postPredictdataURL,
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
 
+                        if (!mPredictedWinningTeam.getText().toString().equals("")
+                                & !mPredictedMomPlayer.getText().toString().equals("")
+                                & !mPredictedHrgPlayer.getText().toString().equals("")
+                                & !mPredictedHwtPlayer.getText().toString().equals("")) {
+                            Toast.makeText(p2w.this, "You will received the mail if you were one of lucky contestant, to predict Right", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(p2w.this, "Reset Done", Toast.LENGTH_LONG).show();
+                        }
                         Log.e("POST PREDICT DATA", "onResponse: "+ response );
                         hidepDialog();
                     }
@@ -437,7 +453,7 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(p2w.this,error.toString(),Toast.LENGTH_LONG ).show();
+                        Toast.makeText(p2w.this,"Something went wrong ! Please Try Again ",Toast.LENGTH_LONG ).show();
                         hidepDialog();
                     }
                 }){
@@ -465,12 +481,10 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
     public void maketeamlistrequest(String teamshortname){
 
         hidepDialog();
-        teamplayerslist= teamplayerslist+teamshortname;
+//        teamplayerslist= teamplayerslist+teamshortname;
+//teamplayerslist= teamplayerslist+6;
 
-        //teamplayerslist= teamplayerslist+6;
-
-
-        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, teamplayerslist, null,
+        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, teamplayerslist+teamshortname, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -518,4 +532,5 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
         requestQueue.add(jsonreq);
 
     }
+
     }
