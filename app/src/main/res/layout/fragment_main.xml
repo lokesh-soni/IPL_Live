@@ -53,14 +53,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="22sp"
-            android:text="Not Available"
             android:alpha="0.8"
             android:textColor="@color/cardview_light_background"/>
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ComingUp Match"
+            android:text="Upcoming Match"
             android:textSize="18sp"
             android:textColor="@color/cardview_light_background"/>
         <TextView

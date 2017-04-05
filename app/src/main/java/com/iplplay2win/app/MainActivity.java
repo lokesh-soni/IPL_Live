@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(goToMarket);
                 } catch (ActivityNotFoundException e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://play.google.com/store/apps/details?id=com.iplplay2win.app&hl=en" + getApplicationContext().getPackageName())));
+                            Uri.parse("https://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName())));
                 }
             }
 
@@ -124,8 +124,6 @@ public class MainActivity extends AppCompatActivity {
         matchdetails= (LinearLayout) findViewById(R.id.matchdetails);
 
         matchislive = (TextView)findViewById(R.id.matchislive);
-
-
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.e("FIREBASE TOKEN", "onCreate: " +refreshedToken);
