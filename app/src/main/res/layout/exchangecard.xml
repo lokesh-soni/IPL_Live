@@ -29,7 +29,6 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Suraj Singh"
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimary"
                 android:layout_weight="0.9"
@@ -41,8 +40,6 @@
                 android:layout_height="wrap_content"
                 android:autoLink="phone"
                 android:textColorLink="@color/cardview_dark_background"
-                android:text="9859388393"
-                android:layout_alignParentRight="true"
                 android:textSize="18sp"
                 android:textColor="@color/cardview_dark_background"/>
         </LinearLayout>
@@ -69,7 +66,6 @@
     android:textColor="@color/cardview_dark_background"/>
 
         <View
-            android:layout_below="@id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="8dp"
@@ -87,20 +83,22 @@
             android:minHeight="30dp"
             android:textSize="20sp"
             android:textColor="@color/cardview_dark_background"/>
-        <View
-            android:layout_below="@id/tv_name"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="#e1e1e1"/>
-        <TextView
-            android:id="@+id/exchangersplace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_location"
-            android:padding="4dp"
-            android:textSize="18sp"
-            />
+        <!--<View-->
+            <!--android:layout_below="@id/tv_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:background="#e1e1e1"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/exchangersplace"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:drawableLeft="@drawable/ic_location"-->
+            <!--android:padding="4dp"-->
+            <!--android:textSize="18sp"-->
+            <!--/>-->
+
     </LinearLayout>
 </android.support.v7.widget.CardView>

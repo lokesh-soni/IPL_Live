@@ -10,6 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -26,7 +32,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
@@ -39,6 +47,8 @@ public class Schedule extends AppCompatActivity {
     public static final int READ_TIMEOUT = 15000;
     private RecyclerView mScheduleRV;
     private AdapterSchedule mAdapter;
+    ArrayList<ScheduleData> data;
+    ProgressDialog pDialog;
     String select_title;
     String scheduleid;
 
@@ -50,10 +60,6 @@ public class Schedule extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Bundle extras = getIntent().getExtras();
-        select_title = extras.getString("SCHEDULE");
-        getSupportActionBar().setTitle(select_title);
-
         ApplicationAnalytics.getInstance().trackScreenView("SCHEDULE :"+select_title);
 
         //BANNER
@@ -62,10 +68,95 @@ public class Schedule extends AppCompatActivity {
         AdRequest adRequest=new AdRequest.Builder().build();
         adView.loadAd(adRequest);
         //Make call to AsyncTask
-        new AsyncFetch().execute();
-    }
+      //  new AsyncFetch().execute();
+        data=new ArrayList<>();
+        pDialog=new ProgressDialog(Schedule.this);
+        pDialog.setMessage("Loading");
+        pDialog.setCancelable(false);
 
-    private class AsyncFetch extends AsyncTask<String, String, String> {
+        makeStringRequest();
+    }
+    public void makeStringRequest(){
+        showpDialog();
+
+    JsonArrayRequest req = new JsonArrayRequest(Urls.URL_SCHEDULE,
+            new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                   // Log.d(TAG, response.toString());
+
+                    try {
+                        // Parsing json array response
+                        // loop through each json object
+
+                        for (int i = 0; i < response.length(); i++) {
+
+                            JSONObject person = (JSONObject) response
+                                    .get(i);
+                            ScheduleData scheduleData = new ScheduleData();
+                            scheduleid = scheduleData.schedule_id = person.getString("schedule_id");
+                            scheduleData.teamAlogo= person.getString("team_A_logo");
+                            scheduleData.teamBlogo= person.getString("team_B_logo");
+                            scheduleData.teamAShort_name= person.getString("team_A_short_name");
+                            scheduleData.teamBShort_name= person.getString("team_B_short_name");
+                            scheduleData.day= person.getString("day");
+                            scheduleData.date= person.getString("date");
+                            scheduleData.time=person.getString("time");
+                            scheduleData.place=person.getString("place");
+
+                            data.add(scheduleData);
+
+                            hidepDialog();
+                        }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("JSONException", "onPostExecute:"+e.toString()+"" );
+
+                        }
+                    // Setup and Handover data to recyclerview
+                    mScheduleRV = (RecyclerView)findViewById(R.id.schedule_rv);
+                    mScheduleRV.setItemAnimator(new ScaleInTopAnimator());
+                    mAdapter = new AdapterSchedule(Schedule.this, data);
+
+                    mScheduleRV.setAdapter(new ScaleInAnimationAdapter(mAdapter));
+                    mScheduleRV.setLayoutManager(new LinearLayoutManager(Schedule.this));
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("YouTube Volley Request", "onErrorResponse: "+error+"" );
+                        hidepDialog();
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> params=new HashMap<String, String>();
+                        return params;
+                    }
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/x-www-form-urlencoded";
+                    }
+                };
+                RequestQueue requestQueue= Volley.newRequestQueue(Schedule.this);
+        requestQueue.add(req);
+            }
+
+
+    private void showpDialog(){
+        if(!pDialog.isShowing()){
+            pDialog.show();
+        }
+    }
+    private void hidepDialog(){
+        if(pDialog.isShowing()){
+            pDialog.dismiss();
+        }
+    }
+   /* private class AsyncFetch extends AsyncTask<String, String, String> {
         ProgressDialog pdLoading = new ProgressDialog(Schedule.this);
         HttpURLConnection conn;
         URL url = null;
@@ -105,13 +196,13 @@ public class Schedule extends AppCompatActivity {
                 // setDoOutput to true as we recieve data from json file
                 //conn.setDoOutput(true);
 
-            /*} catch (IOException e1) {
+            *//*} catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
                 return e1.toString();
             }
 
-            try {*/
+            try {*//*
 
                 int response_code = conn.getResponseCode();
 
@@ -194,5 +285,5 @@ public class Schedule extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 }

@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:330838229908:android:bc332266856a3335",
         "android_client_info": {
-          "package_name": "in.iplplay2win.ipl2017live"
+          "package_name": "in.iplplay2win.app"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "330838229908-1k82k1jlgggfradrs1762juej4nc0jg8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "in.iplplay2win.ipl2017live",
+            "package_name": "in.iplplay2win.app",
             "certificate_hash": "1e83f95bdfef6389dbc3760ecfd95e7d49eae926"
           }
         },

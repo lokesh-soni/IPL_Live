@@ -2,6 +2,7 @@ package com.iplplay2win.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +78,7 @@ public class AdapterSchedule extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private class MyHolder extends RecyclerView.ViewHolder {
         ImageView teamAlogo, teamBlogo;
         TextView Day, Time, Place, Date, TeamAShort_Name, TeamBShort_Name;
-        TextView predictcta;
+        CardView predictcta;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -92,7 +93,7 @@ public class AdapterSchedule extends RecyclerView.Adapter<RecyclerView.ViewHolde
             Time =(TextView) itemView.findViewById(R.id.match_time);
             Date =(TextView) itemView.findViewById(R.id.match_date);
             Place =(TextView) itemView.findViewById(R.id.place_schedule);
-            predictcta = (TextView) itemView.findViewById(R.id.predictcta);
+            predictcta = (CardView) itemView.findViewById(R.id.predictcta);
         }
     }
 }

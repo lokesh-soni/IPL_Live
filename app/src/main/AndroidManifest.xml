@@ -12,6 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -40,21 +41,6 @@
         <activity
             android:name=".Schedule"
             android:label="@string/title_activity_schedule"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.iplplay2win.app.MainActivity" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".predict_n_win"
-            android:label="@string/title_activity_predict_n_win"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -105,11 +91,11 @@
         <activity
             android:name=".p2w"
             android:label="@string/title_activity_p2w"
-            android:parentActivityName=".predict_n_win"
+            android:parentActivityName=".Schedule"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.iplplay2win.app.predict_n_win" />
+                android:value="com.iplplay2win.app.Schedule" />
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

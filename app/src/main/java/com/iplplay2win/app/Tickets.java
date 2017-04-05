@@ -81,31 +81,35 @@ public class Tickets extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");
+        /*MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");
 
         mInterstitialAd = new InterstitialAd(this);
 
         // set the ad unit ID
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
 
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
+        if (!mInterstitialAd.isLoading() && !mInterstitialAd.isLoaded()) {
+            AdRequest adRequest = new AdRequest.Builder()
+                    .build();
 
-        // Load ads into Interstitial Ads
-        mInterstitialAd.loadAd(adRequest);
+        }
+
+
 
         mInterstitialAd.setAdListener(new AdListener() {
             public void onAdLoaded() {
                 showInterstitial();
             }
-        });
+        });*/
 
-//        //BANNER
-//        MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
-//
-//        AdView adView=(AdView)findViewById(R.id.adViewTeam);
-//        AdRequest adRequest=new AdRequest.Builder().build();
-//        adView.loadAd(adRequest);
+
+
+        //BANNER
+        MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
+
+        AdView adView=(AdView)findViewById(R.id.adViewTickets);
+        AdRequest adRequest=new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         tv_name=(TextView)findViewById(R.id.tv_name);
         tv_phone=(TextView)findViewById(R.id.tv_phone);
@@ -136,14 +140,14 @@ public class Tickets extends AppCompatActivity {
     public void addItemsToSpinner() {
 
         ArrayList<String> list = new ArrayList<String>();
-        list.add("all");
-        list.add("kolkata");
-        list.add("chennai");
-        list.add("punjab");
-        list.add("kochi");
-        list.add("hyderabad");
-        list.add("pune");
-        list.add("mumbai");
+      //  list.add("All");
+        list.add("Kolkata");
+        list.add("Chennai");
+        list.add("Punjab");
+        list.add("Kochi");
+        list.add("Hyderabad");
+        list.add("Pune");
+        list.add("Mumbai");
 
         // Custom ArrayAdapter with spinner item layout to set popup background
 
@@ -152,29 +156,33 @@ public class Tickets extends AppCompatActivity {
         spinner_nav.setAdapter(spinnerArrayAdapter);
 
         spinner_nav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            //  boolean isSpinnerInitial = false;
+//             boolean isSpinnerInitial = false;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                item = spinnerArrayAdapter.getItem(position);
+//             if(isSpinnerInitial) {
+                 item = spinnerArrayAdapter.getItem(position);
+                 // Showing selected spinner item
+//                 Toast.makeText(getApplicationContext(), "Selected  : " + item,
+//                         Toast.LENGTH_LONG).show();
+                showpDialog();
+                 makeStringRequest();
 
-                // Showing selected spinner item
-                Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                        Toast.LENGTH_LONG).show();
 
-                makeStringRequest();
-
-            }
+//             }else{
+//                 isSpinnerInitial=true;
+             }
+//            }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                showpDialog();
+                makeStringRequest();
             }
         });
     }
 
     public void makeStringRequest() {
-        hidepDialog();
-
+ticketList.clear();
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, getUrl+"/"+item, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -201,6 +209,8 @@ public class Tickets extends AppCompatActivity {
                             ticket_recycler.setLayoutManager(mLayoutManager);
 
                             ticket_recycler.setAdapter(mAdapter);
+                            hidepDialog();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -224,7 +234,6 @@ public class Tickets extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(Tickets.this);
         requestQueue.add(req);
-
     }
 
     private void showpDialog() {
@@ -239,74 +248,12 @@ public class Tickets extends AppCompatActivity {
         }
     }
 
-    /* public void addItemsToSpinner() {
-
-         ArrayList<String> list = new ArrayList<String>();
-         list.add("Kolkata");
-         list.add("Mumbai");
-         list.add("Chennai");
-         list.add("Punjab");
-         list.add("Kochi");
-         list.add("Hyderabad");
-         list.add("Pune");
-         list.add("All");
-
-         // Custom ArrayAdapter with spinner item layout to set popup background
-
-         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                 android.R.layout.simple_list_item_1, list);
-         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-         spinner_nav.setAdapter(adapter);
-
-         spinner_nav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-             boolean isSpinnerInitial = false;
-
-             @Override
-             public void onItemSelected(AdapterView<?> adapter, View v,
-                                        int position, long id) {
-                 if (isSpinnerInitial) {
-                     // On selecting a spinner item
-                     item = adapter.getItemAtPosition(position).toString();
-
-                     // Showing selected spinner item
-                     Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                             Toast.LENGTH_LONG).show();
-                 } else {
-                     isSpinnerInitial = true;
-                 }
-             }
-
-             @Override
-             public void onNothingSelected(AdapterView<?> arg0) {
-                 // TODO Auto-generated method stub
-
-             }
-         });
-     }
-
-     private void showpDialog() {
-         if (!pDiaolg.isShowing()) {
-             pDiaolg.show();
-         }
-     }
-
-     private void hidepDialog() {
-         if (pDiaolg.isShowing()) {
-             pDiaolg.dismiss();
-         }
-     }
-
- */
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
-    private void showInterstitial() {
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }
-    }
+
+
 
 }

@@ -5,8 +5,27 @@ package com.iplplay2win.app;
  */
 
 public class TicketModel {
-    String name, phone, iwant, ihave;
+
+    String name, phone, iwant, ihave, place , stadium;
     String id;
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public String getStadium() {
+        return stadium;
+    }
+
+    public void setStadium(String stadium) {
+        this.stadium = stadium;
+    }
+
+
 
     public String getId() {
         return id;

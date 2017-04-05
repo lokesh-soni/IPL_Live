@@ -67,7 +67,7 @@ public class player_profile extends AppCompatActivity {
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");
 
-        inter();
+      //  inter();
 
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
@@ -88,7 +88,7 @@ public class player_profile extends AppCompatActivity {
 
 
 
-    public void inter(){
+   /* public void inter(){
 
 
 
@@ -114,7 +114,7 @@ public class player_profile extends AppCompatActivity {
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         }
-    }
+    }*/
 
     private class AsyncFetch extends AsyncTask<String, String, String> {
         ProgressDialog pdLoading = new ProgressDialog(player_profile.this);
@@ -284,6 +284,12 @@ public class player_profile extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
 

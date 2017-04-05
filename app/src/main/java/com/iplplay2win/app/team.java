@@ -24,8 +24,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -43,7 +52,10 @@ public class team extends AppCompatActivity {
     public static final int READ_TIMEOUT = 15000;
     private RecyclerView mTeamRV;
     private AdapterTeam mTeamAdapter;
+    ProgressDialog pDialog;
     String select_title;
+    ArrayList<TeamData> data;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +77,87 @@ public class team extends AppCompatActivity {
         AdRequest adRequest=new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
-
-
-
         ApplicationAnalytics.getInstance().trackScreenView("Team");
 
         //Make call to AsyncTask
-        new AsyncFetch().execute();
+      //  new AsyncFetch().execute();
+        pDialog=new ProgressDialog(team.this);
+        pDialog.setMessage("Please Wait..");
+        pDialog.setCancelable(true);
+        data=new ArrayList<>();
 
+        makeStringRequest();
     }
-    private class AsyncFetch extends AsyncTask<String, String, String> {
+
+
+    public void makeStringRequest(){
+        showpDialog();
+
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, Urls.URL_TEAM, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONArray jsonArray=null;
+                        try {
+                            jsonArray=response.getJSONArray("teams");
+                            for(int i=0;i<jsonArray.length();i++){
+                                JSONObject jsonObject=(JSONObject) jsonArray.get(i);
+                                TeamData teamData = new TeamData();
+                                teamData.TeamLogo= jsonObject.optString("logo");
+                                teamData.TeamName= jsonObject.optString("full_name");
+                                //teamData.TeamID=json_data.getString("teamid");
+                                teamData.TeamID=jsonObject.optInt("teamid")+"";
+
+                                data.add(teamData);
+                            }
+                            mTeamRV = (RecyclerView)findViewById(R.id.teamRV);
+                            mTeamRV.setItemAnimator(new ScaleInTopAnimator());
+
+                            mTeamAdapter = new AdapterTeam(team.this, data);
+                            mTeamRV.setAdapter(new ScaleInAnimationAdapter(mTeamAdapter));
+                            mTeamRV.setLayoutManager(new LinearLayoutManager(team.this));
+                            hidepDialog();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("JSONException", "onPostExecute:"+e.toString()+"" );
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("YouTube Volley Request", "onErrorResponse: "+error+"" );
+                hidepDialog();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded";
+            }
+        };
+        RequestQueue requestQueue= Volley.newRequestQueue(team.this);
+        requestQueue.add(jsonObjectRequest);
+    }
+    private void showpDialog(){
+        if(!pDialog.isShowing()){
+            pDialog.show();
+        }
+    }
+    private void hidepDialog(){
+        if(pDialog.isShowing()){
+            pDialog.dismiss();
+        }
+    }
+
+   /* private class AsyncFetch extends AsyncTask<String, String, String> {
         ProgressDialog pdLoading = new ProgressDialog(team.this);
         HttpURLConnection conn;
         URL url = null;
@@ -114,13 +197,13 @@ public class team extends AppCompatActivity {
                 // setDoOutput to true as we recieve data from json file
                 //conn.setDoOutput(true);
 
-            /*} catch (IOException e1) {
+            *//*} catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
                 return e1.toString();
             }
 
-            try {*/
+            try {*//*
 
                 int response_code = conn.getResponseCode();
 
@@ -198,6 +281,6 @@ public class team extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
 }

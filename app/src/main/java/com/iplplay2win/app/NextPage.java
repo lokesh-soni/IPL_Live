@@ -57,7 +57,7 @@ public class NextPage extends AppCompatActivity {
         sp=(Spinner)findViewById(R.id.sp_match);
 
         ArrayList<String> list = new ArrayList<String>();
-        list.add("Select Match Venue");
+      //  list.add("Select Match Venue");
         list.add("Kolkata");
         list.add("Chennai");
         list.add("Punjab");
@@ -73,19 +73,25 @@ public class NextPage extends AppCompatActivity {
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp.setAdapter(spinnerArrayAdapter);
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            //  boolean isSpinnerInitial = false;
+              boolean isSpinnerInitial = false;
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                item = spinnerArrayAdapter.getItem(position);
+              if(isSpinnerInitial) {
+                  item = spinnerArrayAdapter.getItem(position);
 
-                // Showing selected spinner item
-                Toast.makeText(getApplicationContext(), "Selected  : " + item,
-                        Toast.LENGTH_LONG).show();
+                  // Showing selected spinner item
+                  Toast.makeText(getApplicationContext(), "Selected  : " + item,
+                          Toast.LENGTH_LONG).show();
+              }else{
+                  isSpinnerInitial=true;
+              }
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+                Toast.makeText(NextPage.this,"Please select match venue",Toast.LENGTH_LONG).show();
 
             }
         });
@@ -115,7 +121,7 @@ public class NextPage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(NextPage.this,error.toString(),Toast.LENGTH_LONG ).show();
+                      //  Toast.makeText(NextPage.this,error.toString(),Toast.LENGTH_LONG ).show();
 
                         hidepDialog();
                     }
@@ -167,7 +173,7 @@ public class NextPage extends AppCompatActivity {
             name.setError("Please Enter Valid Name");
             valid=false;
         }
-        if(phone.getText().toString().isEmpty() || phone.length()==10){
+        if(phone.getText().toString().isEmpty() || phone.length()<10){
             phone.setError("Please Enter Valid 10 Digit Number");
             valid=false;
         }

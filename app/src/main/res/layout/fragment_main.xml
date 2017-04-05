@@ -24,6 +24,7 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/ipllogo" />
     <TextView
+        android:id="@+id/matchislive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="LIVE"
@@ -34,27 +35,152 @@
         android:layout_marginTop="-5dp"
         android:layout_marginLeft="-4dip"
         />
-    <TextView
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/matchdetails"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="IPL Live Score will be available from 5th April"
-        android:textColor="@color/cardview_light_background"
-        android:alpha="0.5"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="30dp"
-        android:textSize="20sp"
-        android:visibility="visible"
-        />
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Previous Match"
+            android:textSize="18sp"
+            android:textColor="@color/cardview_light_background"/>
+        <TextView
+            android:id="@+id/previousmatchstatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="Not Available"
+            android:alpha="0.8"
+            android:textColor="@color/cardview_light_background"/>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ComingUp Match"
+            android:textSize="18sp"
+            android:textColor="@color/cardview_light_background"/>
+        <TextView
+            android:id="@+id/comingmatchstatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="Not Available"
+            android:alpha="0.8"
+            android:textColor="@color/cardview_light_background"/>
 
-   <ListView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:id="@+id/livescores"
-       android:visibility="gone">
+    </LinearLayout>
 
-   </ListView>
+    <RelativeLayout
+        android:id="@+id/livescore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+        <LinearLayout
+            android:id="@+id/teamAscores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/Batsman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cardview_light_background"
+                android:textAllCaps="true"
+                android:textSize="56sp"
+                android:textStyle="bold"/>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/batsmanscores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="36sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cardview_light_background"
+                    android:text="/"
+                    android:textSize="36sp"/>
+                <TextView
+                    android:id="@+id/batsmanwicket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cardview_light_background"
+                    android:textSize="36sp"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/batsmanovers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cardview_light_background"
+                android:padding="4dip"
+                android:layout_marginLeft="8dp"
+                android:background="#757575"
+                android:textSize="16sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/teamBscores"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-12dp"
+            android:layout_below="@id/teamAscores"
+            >
+            <TextView
+                android:id="@+id/bowlername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="true"
+                android:alpha="0.8"
+                android:textSize="24sp"
+                android:textColor="@color/cardview_light_background"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/bowlerscores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cardview_light_background"
+                    android:alpha="0.6"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cardview_light_background"
+                    android:alpha="0.6"
+                    android:text="/"
+                    android:textSize="24sp"/>
+                <TextView
+                    android:id="@+id/bowlerwicket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cardview_light_background"
+                    android:alpha="0.6"
+                    android:textSize="24sp"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/bowlersidemess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cardview_light_background"
+                android:alpha="0.6"
+                android:textStyle="italic"
+                android:text="Connecting to Internet..."
+                android:textSize="24sp"/>
+        </LinearLayout>
+    </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -129,7 +255,7 @@
             android:drawableLeft="@drawable/ic_flash"
             android:text="  Predict 2 Win"
             android:textAllCaps="true"
-            android:padding="16dp"
+            android:padding="12dp"
             android:textColor="#26c6da"
             android:textSize="16sp" />
 
@@ -140,7 +266,7 @@
                 android:drawableLeft="@drawable/ic_talk"
                 android:text="  Talk 2 Ur Fav Player"
                 android:textAllCaps="true"
-                android:padding="16dp"
+                android:padding="12dp"
                 android:textColor="#26c6da"
                 android:textSize="16sp" />
 
@@ -151,7 +277,7 @@
             android:text="  Get Ur Tickets Exchanged"
             android:drawableLeft="@drawable/ic_exchange"
             android:textSize="16sp"
-            android:padding="16dp"
+            android:padding="12dp"
             android:clickable="true"
             android:textAllCaps="true"
             android:textColor="#26c6da" />
@@ -163,7 +289,7 @@
             android:text="  Watch Exciting IPL Videos"
             android:textSize="16sp"
             android:textAllCaps="true"
-            android:padding="16dp"
+            android:padding="12dp"
             android:clickable="true"
             android:drawableLeft="@drawable/ic_video_library"
             android:textColor="#26c6da" />

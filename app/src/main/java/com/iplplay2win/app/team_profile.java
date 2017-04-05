@@ -11,9 +11,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.InterstitialAd;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,18 +37,26 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.ScaleInTopAnimator;
 
 public class team_profile extends AppCompatActivity {
 
+    InterstitialAd mInterstitialAd;
+
+    ProgressDialog pDialog;
+    ArrayList<Team_ProfileData> data;
+
 //    ImageView TeamLogo;
 //    TextView TeamName, HomeGround, Onwer, Link;
 //    Button FacebookLink, TwitterLink;
 Context context;
     int teamid;
+    String  url;
 
     // CONNECTION_TIMEOUT and READ_TIMEOUT are in milliseconds
     public static final int CONNECTION_TIMEOUT = 10000;
@@ -55,6 +73,8 @@ Context context;
 
         ApplicationAnalytics.getInstance().trackScreenView("Team Profile");
 
+        inter();
+
         //BANNER
         MobileAds.initialize(getApplicationContext(),"ca-app-pub-4161588401571941/6846945512");
 
@@ -64,140 +84,110 @@ Context context;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
             teamid = Integer.parseInt(extras.getString("Teamid"));
             Log.e("Teamid", teamid + "");
-        }
         Log.e("TeamID", String.valueOf(teamid));
         //Make call to AsyncTask
         //new team_profile.AsyncFetch().execute();
-        new AsyncFetch().execute();
+      //  new AsyncFetch().execute();
+        pDialog=new ProgressDialog(team_profile.this);
+        pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
+        data=new ArrayList<>();
+
+        makeStringRequest();
     }
-    private class AsyncFetch extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(team_profile.this);
-        HttpURLConnection conn;
-        URL url = null;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+    public void makeStringRequest(){
+        showpDialog();
 
-            //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
-            pdLoading.setCancelable(false);
-            pdLoading.show();
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, Urls.URL_PLAYERS_LIST_TEAMS +"/"+ teamid , null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        JSONArray jsonArray=null;
+                        try {
+                            jsonArray=response.getJSONArray("players");
+                            for(int i=0;i<jsonArray.length();i++){
+                                JSONObject json_data=(JSONObject) jsonArray.get(i);
+                                Team_ProfileData team_profileData = new Team_ProfileData();
+                                team_profileData.player_image= json_data.getString("player_image");
+                                team_profileData.player_name= json_data.getString("player_name");
+                                team_profileData.playerid=json_data.getString("player_id");
 
-        }
+                                data.add(team_profileData);
+                            }
+                            // Setup and Handover data to recyclerview
+                            mTeamProfileRV = (RecyclerView)findViewById(R.id.players_list_rv);
+                            mTeamProfileRV.setItemAnimator(new ScaleInTopAnimator());
 
-        @Override
-        protected String doInBackground(String... params) {
-            try {
+                            mTeamProfileAdapter = new AdapterTeamProfile(team_profile.this, data);
+                            mTeamProfileRV.setAdapter(new ScaleInAnimationAdapter(mTeamProfileAdapter));
 
-                // Enter URL address where your json file resides
-                // Even you can make call to php file which returns json data
-                //url = new URL(Urls.URL_PLAYERS_LIST_TEAMS);
-                url = new URL(Urls.URL_PLAYERS_LIST_TEAMS +"/"+ teamid);
-                Log.i("URL", "doInBackground:"+url);
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return e.toString();
-            }
-            try {
+                            mTeamProfileRV.setLayoutManager(new LinearLayoutManager(team_profile.this));
+                            hidepDialog();
 
-                // Setup HttpURLConnection class to send and receive data from php and mysql
-                conn = (HttpURLConnection) url.openConnection();
-                //conn.setReadTimeout(READ_TIMEOUT);
-                //conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestMethod("GET");
-
-                // setDoOutput to true as we recieve data from json file
-                //conn.setDoOutput(true);
-
-            /*} catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-                return e1.toString();
-            }
-
-            try {*/
-
-                int response_code = conn.getResponseCode();
-
-                // Check if successful connection made
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    // Read data sent from server
-                    InputStream input = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        Log.e("line", line);
-                        result.append(line);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e("JSONException", "onPostExecute:"+e.toString()+"" );
+                        }
                     }
-                    reader.close();
-
-                    // Pass data to onPostExecute method
-                    return result.toString();
-
-                }
-                else {
-
-                    return "unsuccessful";
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return e.toString();
-            } finally {
-                conn.disconnect();
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("YouTube Volley Request", "onErrorResponse: "+error+"" );
+                hidepDialog();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new HashMap<String, String>();
+                return params;
             }
 
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.e("result", result);
-
-            //this method will be running on UI thread
-            pdLoading.dismiss();
-            List<Team_ProfileData> data=new ArrayList<>();
-
-            pdLoading.dismiss();
-            try {
-                // JSONObject jObj = new JSONObject("{\"results\":" + result + "}");
-                JSONObject jObj = new JSONObject(result);
-                JSONArray jArray = jObj.optJSONArray("players");
-                // Extract data from json and store into ArrayList as class objects
-                for(int i=0;i<jArray.length();i++){
-                    JSONObject json_data = jArray.getJSONObject(i);
-                    Team_ProfileData team_profileData = new Team_ProfileData();
-                    team_profileData.player_image= json_data.getString("player_image");
-                    team_profileData.player_name= json_data.getString("player_name");
-                    team_profileData.playerid=json_data.getString("player_id");
-
-                    data.add(team_profileData);
-                }
-
-                // Setup and Handover data to recyclerview
-                mTeamProfileRV = (RecyclerView)findViewById(R.id.players_list_rv);
-                mTeamProfileRV.setItemAnimator(new ScaleInTopAnimator());
-
-                mTeamProfileAdapter = new AdapterTeamProfile(team_profile.this, data);
-                mTeamProfileRV.setAdapter(new ScaleInAnimationAdapter(mTeamProfileAdapter));
-
-                mTeamProfileRV.setLayoutManager(new LinearLayoutManager(team_profile.this));
-
-            } catch (JSONException e) {
-                Log.e("JSON PlayersList", result );
-                Toast.makeText(team_profile.this, e.toString(), Toast.LENGTH_LONG).show();
-                Log.e("JSONException", "onPostExecute:"+e.toString()+"" );
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded";
             }
-
+        };
+        RequestQueue requestQueue= Volley.newRequestQueue(team_profile.this);
+        requestQueue.add(jsonObjectRequest);
+    }
+    private void showpDialog(){
+        if(!pDialog.isShowing()){
+            pDialog.show();
         }
+    }
+    private void hidepDialog(){
+        if(pDialog.isShowing()){
+            pDialog.dismiss();
+        }
+    }
+    public void inter(){
+
+
+
+        mInterstitialAd = new InterstitialAd(this);
+
+        // set the ad unit ID
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
 
     }
-
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
 }

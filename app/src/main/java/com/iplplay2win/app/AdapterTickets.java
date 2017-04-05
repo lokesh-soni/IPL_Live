@@ -27,13 +27,12 @@ public class AdapterTickets extends RecyclerView.Adapter<AdapterTickets.MyViewHo
             iwant=(TextView)view.findViewById(R.id.tv_iwant);
             ihave=(TextView)view.findViewById(R.id.tv_ihave);
 
+
         }
     }
     public AdapterTickets(ArrayList<TicketModel> ticketList){
         this.ticketList=ticketList;
-//        ticketList.clear();
-//        ticketList.addAll(ticketList);
-//        notifyDataSetChanged();
+
     }
 
     @Override

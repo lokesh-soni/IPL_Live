@@ -19,4 +19,9 @@
     <string name="facebook_app_id">1664236843872280</string>
     <string name="interstitial_ad_unit_id">ca-app-pub-4161588401571941/2137544315</string>
     <string name="action_exchange">Exchange</string>
+    <string name="my_own_title">Rate App</string>
+    <string name="my_own_message">If you enjoy using this App,please take a moment to rate it. Thanks for your support!</string>
+    <string name="my_own_rate">YES</string>
+    <string name="my_own_thanks">LATER</string>
+    <string name="my_own_cancel">NEVER</string>
 </resources>
