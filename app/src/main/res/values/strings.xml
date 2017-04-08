@@ -24,4 +24,5 @@
     <string name="my_own_rate">YES</string>
     <string name="my_own_thanks">LATER</string>
     <string name="my_own_cancel">NEVER</string>
+    <string name="title_activity_livestats">Live Stats</string>
 </resources>

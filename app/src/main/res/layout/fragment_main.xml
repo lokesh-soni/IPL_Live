@@ -33,8 +33,7 @@
         android:textColor="#C93330"
         android:visibility="invisible"
         android:layout_marginTop="-5dp"
-        android:layout_marginLeft="-4dip"
-        />
+        android:layout_marginLeft="-4dip" />
 
     <LinearLayout
         android:id="@+id/matchdetails"
@@ -48,6 +47,7 @@
             android:text="Previous Match"
             android:textSize="18sp"
             android:textColor="@color/cardview_light_background"/>
+
         <TextView
             android:id="@+id/previousmatchstatus"
             android:layout_width="match_parent"
@@ -55,6 +55,7 @@
             android:textSize="22sp"
             android:alpha="0.8"
             android:textColor="@color/cardview_light_background"/>
+
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
@@ -67,17 +68,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="22sp"
-            android:text="Not Available"
             android:alpha="0.8"
             android:textColor="@color/cardview_light_background"/>
-
     </LinearLayout>
-
     <RelativeLayout
         android:id="@+id/livescore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible">
+        android:visibility="gone">
+
+      <!--  <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.5"
+            android:background="@color/cardview_light_background"
+            />-->
+
         <LinearLayout
             android:id="@+id/teamAscores"
             android:layout_width="match_parent"
@@ -89,6 +95,7 @@
                 android:id="@+id/Batsman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="RCB"
                 android:textColor="@color/cardview_light_background"
                 android:textAllCaps="true"
                 android:textSize="56sp"
@@ -103,7 +110,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/cardview_light_background"
-                    android:textSize="36sp"/>
+                    android:textSize="36sp"
+                    android:text="180"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -115,6 +123,7 @@
                     android:id="@+id/batsmanwicket"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="8"
                     android:textColor="@color/cardview_light_background"
                     android:textSize="36sp"/>
             </LinearLayout>
@@ -124,6 +133,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/cardview_light_background"
                 android:padding="4dip"
+                android:text="Overs 18"
                 android:layout_marginLeft="8dp"
                 android:background="#757575"
                 android:textSize="16sp"/>
@@ -142,6 +152,7 @@
                 android:textAllCaps="true"
                 android:alpha="0.8"
                 android:textSize="24sp"
+                android:text="KKR "
                 android:textColor="@color/cardview_light_background"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -153,6 +164,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/cardview_light_background"
                     android:alpha="0.6"
+                    android:text="280"
                     android:textSize="24sp"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -165,6 +177,7 @@
                     android:id="@+id/bowlerwicket"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="8"
                     android:textColor="@color/cardview_light_background"
                     android:alpha="0.6"
                     android:textSize="24sp"/>
@@ -176,28 +189,85 @@
                 android:textColor="@color/cardview_light_background"
                 android:alpha="0.6"
                 android:textStyle="italic"
+                android:visibility="gone"
                 android:text="Connecting to Internet..."
                 android:textSize="24sp"/>
         </LinearLayout>
+       <LinearLayout
+
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/teamBscores"
+           android:orientation="vertical">
+
+           <TextView
+               android:id="@+id/batsman1"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="24sp"
+               android:textColor="@color/cardview_light_background" />
+
+           <TextView
+               android:id="@+id/batsman2"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="24sp"
+               android:textColor="@color/cardview_light_background" />
+
+           <TextView
+               android:id="@+id/bowler"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textSize="24sp"
+               android:textColor="@color/cardview_light_background" />
+
+       </LinearLayout>
+   <!--     <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/cardview_light_background"
+            android:layout_below="@id/teamBscores"
+            android:layout_marginTop="20dp"
+            android:alpha="0.5"/>
+
         <LinearLayout
             android:id="@+id/poweredby"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/teamBscores">
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:layout_below="@id/view1"
+            android:orientation="horizontal">
+
             <TextView
+                android:id="@+id/pbt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Powered By"
                 android:textStyle="italic"
                 android:padding="4dp"
-                android:textColor="@color/colorAccent"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:src=""
+                android:textColor="@color/cardview_light_background"
+                android:textSize="16dp"
+                android:alpha="0.6"
+                android:layout_below="@id/view1"/>
 
-                />
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/sponslogo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/adlink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="0sp"
+                android:clickable="true"
+                android:autoLink="all" />
+
+        </LinearLayout>-->
+
     </RelativeLayout>
     </LinearLayout>
     <LinearLayout
@@ -233,10 +303,10 @@
     android:layout_margin="2dp"
     android:layout_weight="0.5">
     <TextView
-        android:id="@+id/teambtn"
+        android:id="@+id/livestats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Teams"
+        android:text="Live Stats"
         android:padding="12dp"
         android:gravity="center"
         android:clickable="true"
@@ -244,12 +314,12 @@
         android:textColor="@color/colorPrimary"
         android:textSize="16sp" />
 </android.support.v7.widget.CardView>
+
       <android.support.v7.widget.CardView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_weight="0.5"
-          android:layout_margin="2dp"
-          >
+          android:layout_margin="2dp">
 
             <TextView
                 android:id="@+id/schedulebtn"
@@ -282,7 +352,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_talk"
-                android:text="  Talk 2 Ur Fav Player"
+                android:text="  Talk 2 Ur Fav Player (Team Info)"
                 android:textAllCaps="true"
                 android:padding="12dp"
                 android:textColor="#26c6da"

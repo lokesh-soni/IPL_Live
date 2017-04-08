@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:weightSum="1"
+    android:padding="2dp">
+    <TextView
+        android:text="Teams"
+android:textAllCaps="true"
+        android:textSize="22sp"
+        android:textColor="@color/cardview_dark_background"
+        android:id="@+id/teamname_list"
+        android:textStyle="bold"
+        android:maxWidth="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/totalmatch_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/cardview_dark_background"
+        android:layout_weight="0.1"
+        android:text="M"
+        android:textAllCaps="true"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/totalwin_list"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:textColor="@color/cardview_dark_background"
+        android:text="W"
+        android:textAllCaps="true"
+        android:textSize="22sp" />
+    <TextView
+        android:id="@+id/totallost_list"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textColor="@color/cardview_dark_background"
+        android:layout_weight="0.1"
+        android:text="L"
+        android:textAllCaps="true"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/totaldraw_list"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:textColor="@color/cardview_dark_background"
+        android:text="D"
+        android:textAllCaps="true"
+        android:textSize="22sp"/>
+    <TextView
+        android:id="@+id/totalnrr_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/cardview_dark_background"
+        android:text="NRR"
+        android:textAllCaps="true"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:layout_weight="0.25"/>
+    <TextView
+        android:id="@+id/totalpoints_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PTS"
+        android:textAllCaps="true"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:layout_weight="0.15" />
+
+</TableRow>

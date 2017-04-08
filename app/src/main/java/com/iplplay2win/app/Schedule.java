@@ -60,7 +60,7 @@ public class Schedule extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ApplicationAnalytics.getInstance().trackScreenView("SCHEDULE :"+select_title);
+        ApplicationAnalytics.getInstance().trackScreenView("SCHEDULE");
 
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);

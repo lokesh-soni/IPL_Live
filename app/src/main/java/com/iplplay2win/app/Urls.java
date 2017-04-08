@@ -12,4 +12,8 @@ public class Urls {
     public static final String URL_PLAYER_INFO = "http://www.api.iplplay2win.in/v1/players/all/basic/";
     public static final String URL_VIDEO_LIST = "http://www.api.iplplay2win.in/v1/videos/all";
     public static final String ADMOB_CODE = "ca-app-pub-4161588401571941/6846945512";
+    public static final String EXCHANGE_TICKETS = "http://www.api.iplplay2win.in/v1/exchange";
+   // public static final String SPONS_LINK ="";
+    public static final String TEAM_STATS = "http://www.api.iplplay2win.in/v1/teamstats";
+    public static final String CAPS_N_ALL = "http://www.api.iplplay2win.in/v1/capsnall";
 }

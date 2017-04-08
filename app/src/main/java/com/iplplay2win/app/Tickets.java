@@ -218,7 +218,7 @@ ticketList.clear();
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                hidepDialog();
+//                hidepDialog();
             }
         }) {
             @Override
