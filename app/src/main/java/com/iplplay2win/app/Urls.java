@@ -16,4 +16,5 @@ public class Urls {
    // public static final String SPONS_LINK ="";
     public static final String TEAM_STATS = "http://www.api.iplplay2win.in/v1/teamstats";
     public static final String CAPS_N_ALL = "http://www.api.iplplay2win.in/v1/capsnall";
+    public static final String CHATTING = "http://api.iplplay2win.in/v1/chatlogs/all";
 }

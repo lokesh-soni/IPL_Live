@@ -58,12 +58,7 @@ public class player_profile extends AppCompatActivity {
         setContentView(R.layout.activity_player_profile);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
-
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");
 

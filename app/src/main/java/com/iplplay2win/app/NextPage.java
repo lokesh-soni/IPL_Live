@@ -2,11 +2,15 @@ package com.iplplay2win.app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +24,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.liuguangqiang.ripplelayout.Point;
+import com.liuguangqiang.ripplelayout.Ripple;
+import com.liuguangqiang.ripplelayout.RippleLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,9 +42,12 @@ public class NextPage extends AppCompatActivity {
 
     Spinner sp;
     String item;
-
+    private RippleLayout rippleLayout;
     EditText name,phone,iwant,ihave;
     Button cancel,exchange;
+    private Point point;
+
+    CardView cardform;
 
     /*public static final String KEY_USERNAME="name";
     public static final String KEY_PHONE="phone";
@@ -49,6 +59,43 @@ public class NextPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next_page);
 
+        rippleLayout = (RippleLayout) findViewById(R.id.ripple);
+        rippleLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+
+        Bundle bundle = getIntent().getExtras();
+        point = bundle.getParcelable(Ripple.ARG_START_LOCATION);
+        rippleLayout.setOnStateChangedListener(new RippleLayout.OnStateChangedListener() {
+            @Override
+            public void onOpened() {
+                startIntoAnimation();
+            }
+
+            @Override
+            public void onClosed() {
+                finish();
+                overridePendingTransition(0, 0);
+            }
+        });
+
+        rippleLayout.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                rippleLayout.getViewTreeObserver().removeOnPreDrawListener(this);
+                rippleLayout.start(point);
+                return true;
+            }
+        });
+        cardform=(CardView)findViewById(R.id.cardform);
+        cardform.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                cardform.getViewTreeObserver().removeOnPreDrawListener(this);
+                cardform.setTranslationY(-cardform.getHeight());
+
+                return true;
+            }
+        });
+
         name = (EditText) findViewById(R.id.et_name);
         phone = (EditText) findViewById(R.id.et_number);
         iwant = (EditText) findViewById(R.id.et_i_want);
@@ -59,13 +106,14 @@ public class NextPage extends AppCompatActivity {
         ArrayList<String> list = new ArrayList<String>();
       //  list.add("Select Match Venue");
         list.add("Kolkata");
+        list.add("Pune");
+        list.add("Mumbai");
+        list.add("Delhi");
         list.add("Chennai");
         list.add("Punjab");
         list.add("Kochi");
         list.add("Hyderabad");
-        list.add("Pune");
-        list.add("Mumbai");
-        list.add("Delhi");
+        list.add("Bangalore");
 
         // Custom ArrayAdapter with spinner item layout to set popup background
 
@@ -100,7 +148,9 @@ public class NextPage extends AppCompatActivity {
         pDialog.setCancelable(false);
 
     }
-
+    private void startIntoAnimation() {
+        cardform.animate().translationY(0).setDuration(400).setInterpolator(new DecelerateInterpolator());
+    }
 
     private void userLogin() {
 
@@ -137,6 +187,7 @@ public class NextPage extends AppCompatActivity {
                 map.put("place",item);
                 return map;
             }
+
             @Override
             public String getBodyContentType() {
                 return "application/x-www-form-urlencoded";
@@ -145,20 +196,32 @@ public class NextPage extends AppCompatActivity {
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
     private void openProfile(){
         Intent intent = new Intent(this, Tickets.class);
         startActivity(intent);
+        finish();
     }
-
 
     private void showpDialog(){
         if(!pDialog.isShowing())
             pDialog.show();
     }
+
     private void hidepDialog(){
-        if(pDialog.isShowing())
-            pDialog.dismiss();
+        try {
+            if ((pDialog != null) && pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore
+        } catch (final Exception e) {
+            // Handle or log or ignore
+        } finally {
+            pDialog = null;
+        }
     }
+
     public void register(){
         initialize();
         if(!validate()){
@@ -167,6 +230,7 @@ public class NextPage extends AppCompatActivity {
             userLogin();
         }
     }
+
     public boolean validate(){
         boolean valid=true;
         if(name.getText().toString().isEmpty()){
@@ -188,12 +252,39 @@ public class NextPage extends AppCompatActivity {
 
         return valid;
     }
+
     public void initialize(){
         name.getText().toString();
         phone.getText().toString();
         iwant.getText().toString();
         ihave.getText().toString();
     }
+    @Override
+
+    public void onBackPressed() {
+        if (rippleLayout.canBack()) {
+            if (rippleLayout.isAnimationEnd()) {
+                startOutAnimation();
+                rippleLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        rippleLayout.back();
+                    }
+                }, 300);
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void startOutAnimation() {
+        cardform.animate()
+                .translationY(-cardform.getHeight())
+                .alpha(0.0f)
+                .setDuration(400)
+                .setInterpolator(new DecelerateInterpolator());
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

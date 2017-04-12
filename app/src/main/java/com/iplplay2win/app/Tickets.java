@@ -41,6 +41,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.liuguangqiang.ripplelayout.Ripple;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,6 +72,7 @@ public class Tickets extends AppCompatActivity {
 
     Spinner spinner_nav;
     String item;
+    FloatingActionButton fab;
 
 
     @Override
@@ -124,13 +126,14 @@ public class Tickets extends AppCompatActivity {
 
         spinner_nav = (Spinner) findViewById(R.id.spinner_nav);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(Tickets.this,NextPage.class);
-                startActivity(i);
+
+              //  Intent i=new Intent();
+                Ripple.startActivity(Tickets.this,NextPage.class,fab);
             }
         });
         addItemsToSpinner();
@@ -146,6 +149,8 @@ public class Tickets extends AppCompatActivity {
         list.add("Punjab");
         list.add("Kochi");
         list.add("Hyderabad");
+        list.add("Bangalore");
+        list.add("Delhi");
         list.add("Pune");
         list.add("Mumbai");
 
@@ -167,9 +172,6 @@ public class Tickets extends AppCompatActivity {
                 showpDialog();
                  makeStringRequest();
 
-
-//             }else{
-//                 isSpinnerInitial=true;
              }
 //            }
 
@@ -250,6 +252,8 @@ ticketList.clear();
 
     @Override
     public boolean onSupportNavigateUp() {
+        Intent intent=new Intent(Tickets.this,MainActivity.class);
+        startActivity(intent);
         finish();
         return true;
     }

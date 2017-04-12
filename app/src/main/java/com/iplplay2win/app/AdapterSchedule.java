@@ -2,6 +2,7 @@ package com.iplplay2win.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 /**
  * Created by Anand on 24-03-2017.
@@ -53,17 +58,28 @@ public class AdapterSchedule extends RecyclerView.Adapter<RecyclerView.ViewHolde
         myHolder.TeamBShort_Name.setText(current.teamBShort_name);
 
         // load image into imageview using glide
-        Glide.with(context).load(current.teamAlogo)
+        Glide.with(context)
+                .load(current.teamAlogo)
+                .asBitmap()
+                .encoder(new BitmapEncoder(Bitmap.CompressFormat.PNG,100))
                 .placeholder(R.color.cardview_light_background)
+                .format(PREFER_ARGB_8888)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(myHolder.teamAlogo);
+
         Glide.with(context).load(current.teamBlogo)
+                .asBitmap()
+                .encoder(new BitmapEncoder(Bitmap.CompressFormat.PNG,100))
                 .placeholder(R.color.cardview_light_background)
+                .format(PREFER_ARGB_8888)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(myHolder.teamBlogo);
 
        myHolder.predictcta.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                Intent predictcall = new Intent(context,login.class);
+               predictcall.putExtra("Activity","p2w");
                predictcall.putExtra("SCHEDULEID",current.schedule_id);
                context.startActivity(predictcall);
            }

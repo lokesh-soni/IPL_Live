@@ -25,4 +25,7 @@
     <string name="my_own_thanks">LATER</string>
     <string name="my_own_cancel">NEVER</string>
     <string name="title_activity_livestats">Live Stats</string>
+    <string name="previous_match"><u>Previous Match</u></string>
+    <string name="upcoming_match"><u>Upcoming Match </u></string>
+    <string name="action_logout">Logout</string>
 </resources>

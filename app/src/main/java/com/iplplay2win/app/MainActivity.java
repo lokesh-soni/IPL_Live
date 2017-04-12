@@ -38,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.kila.apprater_dialog.lars.AppRater;
 import com.kobakei.ratethisapp.RateThisApp;
+import com.skyfishjy.library.RippleBackground;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout matchdetails;
 
     TextView previousmatchstatus,comingmatchstatus;
-    TextView matchislive;
+    TextView matchislive,useronline;
 //    ImageView poweredlink;
 
     private FirebaseDatabase mFirebaseInstance;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference batsman1 = mRootRef.child("batsman1");
     DatabaseReference batsman2 = mRootRef.child("batsman2");
     DatabaseReference bowler = mRootRef.child("bowler");
+    DatabaseReference onlineuser = mRootRef.child("user_online");
 
     TextView linksspons;
     String getUrl;
@@ -93,26 +95,45 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
-
+        RippleBackground rippleBackground=(RippleBackground)findViewById(R.id.rippleimage);
+        rippleBackground.startRippleAnimation();
         UpdateHandler updateHandler = new UpdateHandler(MainActivity.this);
 // to start version checker
-        updateHandler.start();
+         try {
+             updateHandler.start();
 // prompting intervals
-        updateHandler.setCount(2);
+             updateHandler.setCount(2);
 // to print new features added automatically
-        updateHandler.setWhatsNew(true);
+             updateHandler.setWhatsNew(true);
 // to enable or show default dialog prompt for version update
-        updateHandler.showDefaultAlert(true);
+             updateHandler.showDefaultAlert(true);
 // listener for custom update prompt
-        updateHandler.setOnUpdateListener(new UpdateListener() {
-            @Override
-            public void onUpdateFound(boolean newVersion, String whatsNew) {
-                Log.v("Update", String.valueOf(newVersion));
-                Log.v("Update", whatsNew);
-            }
+             updateHandler.setOnUpdateListener(new UpdateListener() {
+                 @Override
+                 public void onUpdateFound(boolean newVersion, String whatsNew) {
+                     Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.iplplay2win.app&hl=en" + getApplicationContext().getPackageName());
+                     Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                     // To count with Play market backstack, After pressing back button,
+                     // to taken back to our application, we need to add following flags to intent.
+                     goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                             Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                             Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                     try {
+                         startActivity(goToMarket);
+                     } catch (ActivityNotFoundException e) {
+                         startActivity(new Intent(Intent.ACTION_VIEW,
+                                 Uri.parse("https://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName())));
+                     }
+//                Log.v("Update", String.valueOf(newVersion));
+//                Log.v("Update", whatsNew);
+                 }
 
 
-        });
+             });
+         } catch (NullPointerException error) {
+             Log.e("UPDATE MESSAGE", "onCreate: "+error );
+         }
+
 //        linksspons = (TextView)findViewById(R.id.adlink);
 
      //   poweredlink = (ImageView)findViewById(R.id.sponslogo);
@@ -182,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         mBatsman1 = (TextView)findViewById(R.id.batsman1);
         mBatsman2 = (TextView)findViewById(R.id.batsman2);
         mBowler = (TextView)findViewById(R.id.bowler);
-
+useronline = (TextView)findViewById(R.id.onlinecount);
 
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.e("FIREBASE TOKEN", "onCreate: " +refreshedToken);
@@ -243,6 +264,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(livest);
             }
         });
+        CardView chat = (CardView)findViewById(R.id.chatcard);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent chat = new Intent(MainActivity.this,login.class);
+                chat.putExtra("Activity","ipl");
+                startActivity(chat);
+            }
+        });
 ////Powered By // TODO: 07-04-2017 PoweredBy Advt. in front screen...
 //        makeStringRequest();
 
@@ -258,54 +288,6 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
- /*   public void makeStringRequest() {
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, Urls.SPONS_LINK, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        JSONObject jsonObject;
-//                        JSONObject jsonobject = null;
-                        try {
-//                            jsonArray = response.getJSONArray("spons");
-                            jsonObject = response.getJSONObject("spons");
-//                            Spons_Model sponsmodel = new Spons_Model();
-                            String ImageLink = jsonObject.getString("imagelink");
-                            String link = jsonObject.getString("link");
-//                            ticketList.add(sponsmodel);
-
-                            Glide.with(MainActivity.this).load(ImageLink)
-                                    .placeholder(R.drawable.ic_img_placeholder)
-                                    .error(R.drawable.ic_img_error)
-                                    .into(poweredlink);
-                            linksspons.setText(link);
-
-//                            hidepDialog();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-//                hidepDialog();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                return params;
-            }
-
-            @Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded";
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        requestQueue.add(req);
-    }*/
-
     @Override
     protected void onStart(){
         super.onStart();
@@ -513,6 +495,20 @@ else {
 
                 String message = dataSnapshot.getValue(String.class);
                 mBowler.setText(message);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        onlineuser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String message = dataSnapshot.getValue(String.class);
+                useronline.setText(message);
 
             }
 

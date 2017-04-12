@@ -2,6 +2,7 @@ package com.iplplay2win.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,9 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 
 /**
@@ -55,7 +60,11 @@ public class AdapterYouTubeVideos  extends RecyclerView.Adapter<RecyclerView.Vie
 
         // load image into imageview using glide
         Glide.with(context).load(videothumbnailurl)
-                .placeholder(R.drawable.ic_img_placeholder)
+                .asBitmap()
+                .encoder(new BitmapEncoder(Bitmap.CompressFormat.PNG,100))
+                .placeholder(R.color.cardview_light_background)
+                .format(PREFER_ARGB_8888)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .error(R.drawable.ic_img_error)
                 .into(myHolder.videothumbnail);
 
@@ -83,7 +92,6 @@ public class AdapterYouTubeVideos  extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemCount() {
         return data.size();
-
     }
 
     private class MyHolder extends RecyclerView.ViewHolder {
@@ -95,7 +103,6 @@ public class AdapterYouTubeVideos  extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
 
             videothumbnail=(ImageView)itemView.findViewById(R.id.youtubethumbnail);
-
             VideoTitle =(TextView) itemView.findViewById(R.id.videotitle);
             //    teamID=(TextView)itemView.findViewById(R.id.teamID);
         }

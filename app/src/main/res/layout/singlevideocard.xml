@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:contentPadding="4dp"
     app:cardCornerRadius="8dp"
+    android:background="?attr/selectableItemBackground"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginTop="4dp"
@@ -14,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="?attr/selectableItemBackground"
         android:layout_gravity="center">
 
         <ImageView

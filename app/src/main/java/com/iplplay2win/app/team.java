@@ -152,8 +152,16 @@ public class team extends AppCompatActivity {
         }
     }
     private void hidepDialog(){
-        if(pDialog.isShowing()){
-            pDialog.dismiss();
+        try {
+            if ((pDialog != null) && pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore
+        } catch (final Exception e) {
+            // Handle or log or ignore
+        } finally {
+            pDialog = null;
         }
     }
 

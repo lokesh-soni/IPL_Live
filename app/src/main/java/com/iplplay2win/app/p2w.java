@@ -37,7 +37,6 @@ import java.util.Map;
 public class p2w extends AppCompatActivity {
 
     ArrayList <String> list;
-    ArrayAdapter<String> arrayAdapter;
 
     ProgressDialog pDialog;
     String predictscheduleURL="http://www.api.iplplay2win.in/v1/schedule/";
@@ -55,6 +54,9 @@ public class p2w extends AppCompatActivity {
     Button reset,submit_prediction;
     String useremail,scheduleid;
     String team_B_logo, team_A_short_name, team_B_short_name, day, place, stadium, team_A_logo, schedule_id;
+
+    ArrayAdapter<String> arrayAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -203,18 +205,15 @@ public class p2w extends AppCompatActivity {
         mPredictedHrgPlayer.setVisibility(View.GONE);
         
         postpredictdata();
-       
     }
-
-
     private void selectdialogoption(LinearLayout clickeditem, final TextView itemText) {
 
         android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(p2w.this);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        arrayAdapter = new ArrayAdapter<String>(
                 p2w.this,
                 R.layout.dialog_list);
-        
+
         //// TODO: 01-04-2017  Make arrayAdapter Dynamic 
 //        arrayAdapter.add("Kolkata Knight Rider");
 //        arrayAdapter.add("Royal Challenger Bangalore");
@@ -241,7 +240,7 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
 
     android.app.AlertDialog.Builder builderSingle = new android.app.AlertDialog.Builder(p2w.this);
 
-    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+    arrayAdapter = new ArrayAdapter<String>(
             p2w.this,
             R.layout.dialog_list);
 
@@ -304,8 +303,16 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
             pDialog.show();
     }
     private void hidepDialog(){
-        if(pDialog.isShowing()){
-            pDialog.dismiss();
+        try {
+            if ((pDialog != null) && pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore
+        } catch (final Exception e) {
+            // Handle or log or ignore
+        } finally {
+            pDialog = null;
         }
     }
     public void makeStatusUrl(String scheduleid ,String userid){
@@ -371,58 +378,6 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
         };
         RequestQueue requestQueue = Volley.newRequestQueue(p2w.this);
         requestQueue.add(jsonreq);
-
-    }
-
-    public void belowLayout(){
-        hidepDialog();
-
-        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, statusURL, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        try {
-                            JSONObject jsonObject = response.getJSONObject("predict");
-                            String schedule_id = jsonObject.getString("schedule_id");
-                            String team_A_logo = jsonObject.getString("team_A_logo");
-                            String team_B_logo = jsonObject.getString("team_B_logo");
-                            String team_A_short_name = jsonObject.getString("team_A_short_name");
-                            String team_B_short_name = jsonObject.getString("team_B_short_name");
-                            String day = jsonObject.getString("day");
-                            String place = jsonObject.getString("place");
-                            String stadium = jsonObject.getString("stadium");
-
-                            mPredictedWinningTeam.setText(team_A_short_name);
-                            mPredictedMomPlayer.setText(team_B_short_name);
-                            mPredictedHrgPlayer.setText(day);
-                            mPredictedHwtPlayer.setText(stadium+", "+place );
-
-                        }
-                        catch (JSONException e1) {
-                            e1.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hidepDialog();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                return params;
-            }
-
-            @Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded";
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(p2w.this);
-        requestQueue.add(jsonreq);
-
     }
 
     private void postpredictdata() {
@@ -430,21 +385,19 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
 
         showpDialog();
 
-
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, postPredictdataURL,
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
 
-                        if (!mPredictedWinningTeam.getText().toString().equals("")
-                                & !mPredictedMomPlayer.getText().toString().equals("")
-                                & !mPredictedHrgPlayer.getText().toString().equals("")
-                                & !mPredictedHwtPlayer.getText().toString().equals("")) {
+                        if ((mPredictedWinningTeam.getText().toString().equals("")
+                                & mPredictedMomPlayer.getText().toString().equals("")
+                                & mPredictedHrgPlayer.getText().toString().equals("")
+                                & mPredictedHwtPlayer.getText().toString().equals(""))) {
+                                    Toast.makeText(p2w.this, "Reset Done", Toast.LENGTH_LONG).show();
+                                } else {
                             Toast.makeText(p2w.this, "You will received the mail if you were one of lucky contestant, to predict Right", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(p2w.this, "Reset Done", Toast.LENGTH_LONG).show();
                         }
                         Log.e("POST PREDICT DATA", "onResponse: "+ response );
                         hidepDialog();
@@ -477,12 +430,9 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
-
     public void maketeamlistrequest(String teamshortname){
 
         hidepDialog();
-//        teamplayerslist= teamplayerslist+teamshortname;
-//teamplayerslist= teamplayerslist+6;
 
         JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, teamplayerslist+teamshortname, null,
                 new Response.Listener<JSONObject>() {

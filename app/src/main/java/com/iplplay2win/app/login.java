@@ -31,118 +31,11 @@ import org.json.JSONObject;
 public class login extends AppCompatActivity {
 
     public static final String MyPREFERENCES = "LOGINPrefs" ;
-    LoginButton loginButton;
-    TextView textView;
+String activityname;
+String an;
     CallbackManager callbackManager;
-    String full_name = "";
-    String fb_id = "";
-    String email,scheduleid;
+    String email,scheduleid,name;
     SharedPreferences sharedpreferences;
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-////        FacebookSdk.sdkInitialize(getApplicationContext());
-////        setContentView(R.layout.activity_login);
-////        loginButton=(LoginButton)findViewById(R.id.fb_login_btn);
-////        LoginButton loginfbbutton = (LoginButton)findViewById(R.id.fb_login_btn);
-////        loginButton.setReadPermissions("email");
-//////        callbackManager=CallbackManager.Factory.create();
-////        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-////            @Override
-////            public void onSuccess(LoginResult loginResult) {
-////                Profile fbprofile= Profile.getCurrentProfile();
-////                if (fbprofile != null){
-////
-////                    fb_id= fbprofile.getId();
-////                    full_name=fbprofile.getName();
-////                }
-////                Toast ts = new Toast(login.this);
-////                ts.makeText(login.this,"Login Success",Toast.LENGTH_SHORT);
-////                ts.show();
-////               // Intent intent=new Intent(login.this,p2w.class);
-////                loginResult.getAccessToken().getUserId();
-////                loginResult.getAccessToken().getToken();
-////                GraphRequest.newMeRequest(
-////                        AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-////                            @Override
-////                            public void onCompleted(JSONObject me, GraphResponse response) {
-////try {
-////    email = me.optString("email");
-////   long fb_id = me.getLong("id");
-////
-////    Intent intent=new Intent(login.this,p2w.class);
-////    intent.putExtra("useremail",email);
-////    startActivity(intent);
-////    finish();
-////} catch (JSONException e) {
-////    e.printStackTrace();
-////}
-//////                                if (response.getError() != null) {
-//////                                    // handle errorlog
-//////                                    Log.e("fberror", "onCompleted:"+ response.getError().getErrorMessage() );
-//////                                } else {
-//////                                    String email = me.optString("email");
-//////                                    Log.e("fbemail", "onCompleted:"+email );
-//////
-//////                                }
-////                               /* Intent intent=new Intent(login.this,p2w.class);
-////                                startActivity(intent);*/
-////                            }
-////                        }).executeAsync();
-////               // startActivity(intent);
-////            }
-////
-////            @Override
-////            public void onCancel() {
-////
-////                AlertDialog.Builder builder1 = new AlertDialog.Builder(login.this);
-////                builder1.setMessage("Facebook Login process Cancelled");
-////                builder1.setCancelable(true);
-////
-////                builder1.setPositiveButton(
-////                        "Try Again",
-////                        new DialogInterface.OnClickListener() {
-////                            public void onClick(DialogInterface dialog, int id) {
-////                                dialog.cancel();
-////                            }
-////                        });
-////
-////                builder1.setNegativeButton(
-////                        "Cancel",
-////                        new DialogInterface.OnClickListener() {
-////                            public void onClick(DialogInterface dialog, int id) {
-////                                dialog.cancel();
-////                            }
-////                        });
-////
-////                AlertDialog alert11 = builder1.create();
-////                alert11.show();
-////            }
-////
-////            @Override
-////            public void onError(FacebookException error) {
-////                Log.e("FBError", "onError: "+ error );
-////            }
-////        });
-//////        loginfbbutton.setOnClickListener(new View.OnClickListener() {
-//////            @Override
-//////            public void onClick(View v) {
-//////
-//////            }
-//////        });
-//////        textView=(TextView)findViewById(R.id.textView);
-////
-////        callbackManager=CallbackManager.Factory.create();
-////    }
-////
-////    @Override
-////    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-////        // super.onActivityResult(requestCode, resultCode, data);
-////        callbackManager.onActivityResult(requestCode,resultCode,data);
-////    }
-//    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,13 +44,18 @@ public class login extends AppCompatActivity {
        // FacebookSdk.sdkInitialize(getApplicationContext());
         getSupportActionBar().hide();
         Bundle extras = getIntent().getExtras();
-        scheduleid = extras.getString("SCHEDULEID");
+        activityname = extras.getString("Activity");
+        if (activityname.equals("p2w")){
+            an= activityname;
+            scheduleid = extras.getString("SCHEDULEID");
 
+        }else
+        {an=activityname;}
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         callbackManager = CallbackManager.Factory.create();
 
     LoginButton loginButton = (LoginButton) findViewById(R.id.fb_login_btn);
-    final TextView textView = (TextView) findViewById(R.id.text);
+    //TextView textView = (TextView) findViewById(R.id.text);
         if (!isLoggedIn()){
     String[] permissionList = {"public_profile", "email"};
     loginButton.setReadPermissions(permissionList);
@@ -177,12 +75,15 @@ public class login extends AppCompatActivity {
 
                             // Application code
                             try {
-                                String email = object.getString("email");
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putString("LOGIN",email);
+                                email = object.getString("email");
+                                name = object.getString("name");
+                                editor.putString("EMAIL",email);
+                                editor.putString("NAME",name);
                                 editor.apply();
+//                                editor.commit();
 
-                                Log.e("TAG", "onCompleted: "+email );
+                                Log.e("COOL TAG", "onCompleted: "+email +" name :"+name);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -193,11 +94,25 @@ public class login extends AppCompatActivity {
             request.setParameters(parameters);
             request.executeAsync();
 
-            Intent intentone = new Intent(login.this, p2w.class);
-            intentone.putExtra("EMAIL",email);
-            intentone.putExtra("SCHEDULEID",scheduleid);
-            startActivity(intentone);
-            finish();
+//            email = sharedpreferences.getString("EMAIL","email");
+//            email = sharedpreferences.getString("EMAIL","email");
+//            name = sharedpreferences.getString("NAME","name");
+            Log.e("COOL1", "onCreate: "+ email +" name: " +name );
+//    Log.e("COOL", "onCreate: "+ email );
+
+            if( an.equals("p2w")){
+                Intent intentone = new Intent(login.this, p2w.class);
+                intentone.putExtra("EMAIL",email);
+                intentone.putExtra("SCHEDULEID",scheduleid);
+                startActivity(intentone);
+                finish();
+            }else {
+                Intent intentone = new Intent(login.this, IPL_Chattings.class);
+                intentone.putExtra("EMAIL",email);
+                intentone.putExtra("NAME", name);
+                startActivity(intentone);
+                finish();
+            }
 
 //            Profile fbprofile= Profile.getCurrentProfile();
 //            fb_id= fbprofile.getId();
@@ -223,17 +138,26 @@ public class login extends AppCompatActivity {
         }
     });
 } else {
-    email = sharedpreferences.getString("LOGIN","email");
-    Log.e("COOL", "onCreate: "+ email );
-    Intent intentone = new Intent(login.this, p2w.class);
-    intentone.putExtra("EMAIL",email);
-    intentone.putExtra("SCHEDULEID",scheduleid);
-    startActivity(intentone);
-    finish();
+            email = sharedpreferences.getString("EMAIL","email");
+            name = sharedpreferences.getString("NAME","name");
+            Log.e("COOL2", "onCreate: "+ email +" name: " +name );
+//    Log.e("COOL", "onCreate: "+ email );
 
-}
+    if( an.equals("p2w")){
+        Intent intentone = new Intent(login.this, p2w.class);
+        intentone.putExtra("EMAIL",email);
+        intentone.putExtra("SCHEDULEID",scheduleid);
+        startActivity(intentone);
+        finish();
+    }else {
+        Intent intentone = new Intent(login.this, IPL_Chattings.class);
+        intentone.putExtra("EMAIL",email);
+        intentone.putExtra("NAME", name);
+        startActivity(intentone);
+        finish();
+    }
 
-}
+}}
     public boolean isLoggedIn() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         return accessToken != null;

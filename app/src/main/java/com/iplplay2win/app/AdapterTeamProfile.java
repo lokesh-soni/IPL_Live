@@ -2,6 +2,7 @@ package com.iplplay2win.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,9 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.bumptech.glide.load.DecodeFormat.PREFER_ARGB_8888;
 
 /**
  * Created by Anand on 25-03-2017.
@@ -52,7 +57,11 @@ class AdapterTeamProfile extends RecyclerView.Adapter<RecyclerView.ViewHolder>  
 
         // load image into imageview using glide
         Glide.with(context).load(current.player_image)
-                .placeholder(R.drawable.ic_img_placeholder)
+                .asBitmap()
+                .encoder(new BitmapEncoder(Bitmap.CompressFormat.PNG,100))
+                .placeholder(R.color.cardview_light_background)
+                .format(PREFER_ARGB_8888)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .error(R.drawable.ic_img_error)
                 .into(myHolder.player_image);
 

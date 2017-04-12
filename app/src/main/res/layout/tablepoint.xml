@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_gravity="center"
     android:weightSum="1"
     android:padding="2dp">
     <TextView
-        android:text="Teams"
+        android:text="Team"
 android:textAllCaps="true"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textColor="@color/cardview_dark_background"
         android:id="@+id/teamname_list"
         android:textStyle="bold"
-        android:maxWidth="30dp"
-        android:layout_width="wrap_content"
+        android:maxWidth="40dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
         android:layout_gravity="center"
@@ -29,7 +31,7 @@ android:textAllCaps="true"
         android:layout_weight="0.1"
         android:text="M"
         android:textAllCaps="true"
-        android:textSize="22sp"/>
+        android:textSize="18sp"/>
     <TextView
         android:id="@+id/totalwin_list"
         android:gravity="center"
@@ -39,7 +41,7 @@ android:textAllCaps="true"
         android:textColor="@color/cardview_dark_background"
         android:text="W"
         android:textAllCaps="true"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
     <TextView
         android:id="@+id/totallost_list"
         android:layout_width="wrap_content"
@@ -49,7 +51,7 @@ android:textAllCaps="true"
         android:layout_weight="0.1"
         android:text="L"
         android:textAllCaps="true"
-        android:textSize="22sp"/>
+        android:textSize="18sp"/>
     <TextView
         android:id="@+id/totaldraw_list"
         android:gravity="center"
@@ -59,16 +61,16 @@ android:textAllCaps="true"
         android:textColor="@color/cardview_dark_background"
         android:text="D"
         android:textAllCaps="true"
-        android:textSize="22sp"/>
+        android:textSize="18sp"/>
     <TextView
         android:id="@+id/totalnrr_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/cardview_dark_background"
-        android:text="NRR"
+        android:text="  NRR"
         android:textAllCaps="true"
         android:gravity="center"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:layout_weight="0.25"/>
     <TextView
         android:id="@+id/totalpoints_list"
@@ -77,7 +79,7 @@ android:textAllCaps="true"
         android:text="PTS"
         android:textAllCaps="true"
         android:gravity="center"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:layout_weight="0.15" />
 
 </TableRow>

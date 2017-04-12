@@ -144,18 +144,47 @@ public class Schedule extends AppCompatActivity {
                 RequestQueue requestQueue= Volley.newRequestQueue(Schedule.this);
         requestQueue.add(req);
             }
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if ((pDialog != null) && pDialog.isShowing())
+            pDialog.dismiss();
+        pDialog = null;
+    }
 
 
     private void showpDialog(){
-        if(!pDialog.isShowing()){
-            pDialog.show();
+//        if(!pDialog.isShowing()){
+//            pDialog.show();
+//        }
+        try {
+            if ((this.pDialog == null) && !pDialog.isShowing()) {
+                this.pDialog.show();
+            }
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore
+        } catch (final Exception e) {
+            // Handle or log or ignore
+        } finally {
+            this.pDialog = null;
         }
     }
     private void hidepDialog(){
-        if(pDialog.isShowing()){
-            pDialog.dismiss();
+        try {
+            if ((this.pDialog != null) && this.pDialog.isShowing()) {
+                this.pDialog.dismiss();
+            }
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore 
+        } catch (final Exception e) {
+            // Handle or log or ignore 
+        } finally {
+            this.pDialog = null;
         }
     }
+
+
    /* private class AsyncFetch extends AsyncTask<String, String, String> {
         ProgressDialog pdLoading = new ProgressDialog(Schedule.this);
         HttpURLConnection conn;
