@@ -28,4 +28,9 @@
     <string name="previous_match"><u>Previous Match</u></string>
     <string name="upcoming_match"><u>Upcoming Match </u></string>
     <string name="action_logout">Logout</string>
+    <string name="sign_in">Sign In with Google</string>
+    <string name="action_invite">Invite Friends</string>
+    <string name="invitation_message">Join me on IPL 10 K+ live chat.</string>
+    <string name="invitation_cta">Call to action</string>
+    <string name="invitation_title">Invite for IPL Chat</string>
 </resources>

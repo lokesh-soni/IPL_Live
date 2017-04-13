@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:title="@string/action_logout"
         />
+    <item
+        android:id="@+id/action_invite"
+        android:orderInCategory="100"
+        android:title="@string/action_invite"
+        />
 </menu>

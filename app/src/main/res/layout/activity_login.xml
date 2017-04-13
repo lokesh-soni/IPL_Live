@@ -24,10 +24,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Predict 2 Win"
+            android:text="Welcome to IPL 10 Live App"
             android:padding="8dp"
+            android:gravity="center"
             android:textColor="@color/cardview_light_background"
-            android:textSize="28sp"/>
+            android:textSize="24sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,13 +38,14 @@
             android:alpha="0.6"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="Predict Winning Team, Highest Run Getter, MoM, Highest Wicket Taker \n and Win Exciting Prizes "/>
+            android:text="Now chat with all IPL fans around the world and participate in Predict 2 Win game."/>
         <com.facebook.login.widget.LoginButton
             android:id="@+id/fb_login_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
             android:layout_marginTop="20dp"/>
+
         <!--<android.support.v7.widget.CardView-->
             <!--android:id="@+id/logincardfacebook"-->
             <!--android:layout_width="wrap_content"-->

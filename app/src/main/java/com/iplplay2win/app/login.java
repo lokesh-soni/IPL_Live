@@ -87,6 +87,20 @@ String an;
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
+                            if( an.equals("p2w")){
+                                Intent intentone = new Intent(login.this, p2w.class);
+                                intentone.putExtra("EMAIL",email);
+                                intentone.putExtra("SCHEDULEID",scheduleid);
+                                startActivity(intentone);
+                                finish();
+                            }else {
+                                Intent intentone = new Intent(login.this, IPL_Chattings.class);
+                                intentone.putExtra("EMAIL",email);
+                                intentone.putExtra("NAME", name);
+                                startActivity(intentone);
+                                finish();
+                            }
                         }
                     });
             Bundle parameters = new Bundle();

@@ -105,15 +105,15 @@ public class NextPage extends AppCompatActivity {
 
         ArrayList<String> list = new ArrayList<String>();
       //  list.add("Select Match Venue");
+//        list.add("Kolkata");
         list.add("Kolkata");
-        list.add("Pune");
         list.add("Mumbai");
         list.add("Delhi");
-        list.add("Chennai");
-        list.add("Punjab");
-        list.add("Kochi");
+        list.add("Pune");
         list.add("Hyderabad");
         list.add("Bangalore");
+        list.add("Punjab");
+        list.add("Gujarat");
 
         // Custom ArrayAdapter with spinner item layout to set popup background
 

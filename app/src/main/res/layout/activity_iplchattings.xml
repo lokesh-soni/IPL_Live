@@ -4,8 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.iplplay2win.app.IPL_Chattings"
-    >
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    tools:context="com.iplplay2win.app.IPL_Chattings">
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewChat"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id">
+    </com.google.android.gms.ads.AdView>
 <ImageView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +23,7 @@
 
 <android.support.v7.widget.RecyclerView
     android:layout_marginTop="2dp"
-    android:id="@+id/chatRV"
+    android:id="@+id/messageRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
@@ -30,22 +39,35 @@
         android:weightSum="1"
         android:background="#e1e1e1"
         android:gravity="center">
+        <ImageView
+            android:id="@+id/addMessageImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_a_photo"
+            android:layout_weight="0.1"/>
 
         <EditText
-            android:id="@+id/et_message"
-            android:layout_width="wrap_content"
+            android:id="@+id/messageEditText"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.9"
+            android:layout_weight="0.8"
             android:background="@drawable/editmessage"
             android:hint="Type a Message"
             android:paddingStart="8dp"
             android:paddingLeft="8dp"
             android:layout_margin="8dp" />
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/sendmessage"
+            android:id="@+id/sendButton"
             android:layout_width="wrap_content"
+            android:layout_margin="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:src="@drawable/ic_send"/>
     </LinearLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

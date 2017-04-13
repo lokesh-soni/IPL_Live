@@ -2,6 +2,7 @@ package com.iplplay2win.app;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.login.LoginManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -299,8 +303,18 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
     }
 
     private void showpDialog(){
-        if(!pDialog.isShowing())
-            pDialog.show();
+        try {
+            if ((pDialog == null) && !pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore
+        } catch (final Exception e) {
+            // Handle or log or ignore
+        } finally {
+            pDialog = null;
+        }
+
     }
     private void hidepDialog(){
         try {
@@ -482,5 +496,29 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
         requestQueue.add(jsonreq);
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_chat, menu);
 
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        switch (id){
+            case R.id.action_logout :
+                LoginManager.getInstance().logOut();
+                Intent logout = new Intent (this,MainActivity.class);
+                startActivity(logout);
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     }

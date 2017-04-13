@@ -268,7 +268,7 @@ useronline = (TextView)findViewById(R.id.onlinecount);
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent chat = new Intent(MainActivity.this,login.class);
+                Intent chat = new Intent(MainActivity.this,IPL_Chattings.class);
                 chat.putExtra("Activity","ipl");
                 startActivity(chat);
             }

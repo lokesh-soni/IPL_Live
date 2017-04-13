@@ -56,6 +56,7 @@ public class youtubevideolist extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Exciting IPL Videos");
 
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");

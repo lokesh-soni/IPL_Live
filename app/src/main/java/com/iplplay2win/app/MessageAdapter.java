@@ -22,9 +22,9 @@ Context context;
 
         public MyViewHolder(View view) {
             super(view);
-            name=(TextView)view.findViewById(R.id.chattersname);
-            message=(TextView)view.findViewById(R.id.chatemessage);
-            timing=(TextView)view.findViewById(R.id.timeago);
+//            name=(TextView)view.findViewById(R.id.chattersname);
+//            message=(TextView)view.findViewById(R.id.chatemessage);
+//            timing=(TextView)view.findViewById(R.id.timeago);
         }
     }
     public void newMessage (ArrayList<MessageModel> List){
