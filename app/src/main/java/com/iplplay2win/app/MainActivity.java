@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,9 +68,12 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout livescore;
     LinearLayout matchdetails;
 
+
     TextView previousmatchstatus,comingmatchstatus;
     TextView matchislive,useronline;
 //    ImageView poweredlink;
+
+    InterstitialAd mInterstitialAd;
 
     private FirebaseDatabase mFirebaseInstance;
 
@@ -87,12 +96,49 @@ public class MainActivity extends AppCompatActivity {
 
     TextView linksspons;
     String getUrl;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+
+
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                mInterstitialAd = new InterstitialAd(MainActivity.this);
+
+                // set the ad unit ID
+                mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+                AdRequest adRequest = new AdRequest.Builder()
+                        .build();
+
+                // Load ads into Interstitial Ads
+                mInterstitialAd.loadAd(adRequest);
+
+                mInterstitialAd.setAdListener(new AdListener() {
+                    public void onAdLoaded() {
+                        showInterstitial();
+                        Log.e("TAG", "onAdLoaded: Loaded " );
+                    }
+                });
+
+
+            }
+        },600000);
+
+        //BANNER
+        MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
+
+        AdView adView=(AdView)findViewById(R.id.adViewMain);
+        AdRequest aRequest=new AdRequest.Builder().build();
+        adView.loadAd(aRequest);
 
         mFirebaseInstance = FirebaseDatabase.getInstance();
         RippleBackground rippleBackground=(RippleBackground)findViewById(R.id.rippleimage);
@@ -273,6 +319,7 @@ useronline = (TextView)findViewById(R.id.onlinecount);
                 startActivity(chat);
             }
         });
+
 ////Powered By // TODO: 07-04-2017 PoweredBy Advt. in front screen...
 //        makeStringRequest();
 
@@ -519,5 +566,10 @@ else {
         });
     }
     // [END on_start_add_listener]
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
 
 }

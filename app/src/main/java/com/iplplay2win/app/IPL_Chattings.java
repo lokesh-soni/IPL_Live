@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.inputmethodservice.Keyboard;
 import android.net.Uri;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -41,8 +42,10 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.auth.api.Auth;
@@ -92,6 +95,8 @@ import static com.iplplay2win.app.login.MyPREFERENCES;
 public class IPL_Chattings extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
 
+    InterstitialAd mInterstitialAd;
+
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView messageTextView;
         ImageView messageImageView;
@@ -115,7 +120,7 @@ public class IPL_Chattings extends AppCompatActivity implements
     public static final String ANONYMOUS = "anonymous";
 //    private static final String MESSAGE_SENT_EVENT = "message_sent";
     private static final String MESSAGE_URL = "https://goo.gl/3HMubf";
-    private static final String LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif";
+    private static final String LOADING_IMAGE_URL = "http://www.iplplay2win.in//wp-content/themes/iplplay2win/assets/images/loading.gif";
 
     private String mUsername;
     private String mPhotoUrl;
@@ -141,13 +146,39 @@ public class IPL_Chattings extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iplchattings);
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                mInterstitialAd = new InterstitialAd(IPL_Chattings.this);
+
+                // set the ad unit ID
+                mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+                AdRequest adRequest = new AdRequest.Builder()
+                        .build();
+
+                // Load ads into Interstitial Ads
+                mInterstitialAd.loadAd(adRequest);
+
+                mInterstitialAd.setAdListener(new AdListener() {
+                    public void onAdLoaded() {
+                        showInterstitial();
+                    }
+                });
+
+
+            }
+        },480000);
+
 
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
-        AdView adView=(AdView)findViewById(R.id.adViewChat);
+        mAdView = (AdView)findViewById(R.id.adViewChat);
         AdRequest aRequest=new AdRequest.Builder().build();
-        adView.loadAd(aRequest);
+        mAdView.loadAd(aRequest);
+
 //        /*sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 //
 //        data = new ArrayList<>();
@@ -751,6 +782,12 @@ public class IPL_Chattings extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
+    }
+
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
     }
 
 }
