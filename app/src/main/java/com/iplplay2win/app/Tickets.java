@@ -62,9 +62,7 @@ public class Tickets extends AppCompatActivity {
     TextView tv_name,tv_phone,ihave,iwant;
 
     ProgressDialog pDiaolg;
-    String getUrl = "http://www.api.iplplay2win.in/v1/exchange";
-
-
+    String getUrl = Urls.EXCHANGE_TICKETS;
 
     RecyclerView ticket_recycler;
     private AdapterTickets mAdapter;
@@ -85,24 +83,24 @@ public class Tickets extends AppCompatActivity {
 
         /*MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");
 
+        mInterstitialAd = new InterstitialAd(this); */
+
         mInterstitialAd = new InterstitialAd(this);
 
         // set the ad unit ID
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
 
-        if (!mInterstitialAd.isLoading() && !mInterstitialAd.isLoaded()) {
-            AdRequest adRequest = new AdRequest.Builder()
-                    .build();
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
 
-        }
-
-
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest);
 
         mInterstitialAd.setAdListener(new AdListener() {
             public void onAdLoaded() {
                 showInterstitial();
             }
-        });*/
+        });
 
 
 
@@ -110,8 +108,8 @@ public class Tickets extends AppCompatActivity {
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
         AdView adView=(AdView)findViewById(R.id.adViewTickets);
-        AdRequest adRequest=new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        AdRequest adRequest1=new AdRequest.Builder().build();
+        adView.loadAd(adRequest1);
 
         tv_name=(TextView)findViewById(R.id.tv_name);
         tv_phone=(TextView)findViewById(R.id.tv_phone);
@@ -257,6 +255,10 @@ ticketList.clear();
         return true;
     }
 
-
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
 
 }

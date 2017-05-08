@@ -16,8 +16,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
@@ -51,6 +53,7 @@ public class Schedule extends AppCompatActivity {
     ProgressDialog pDialog;
     String select_title;
     String scheduleid;
+    InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,23 @@ public class Schedule extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mInterstitialAd = new InterstitialAd(this);
+
+        // set the ad unit ID
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+        AdRequest adRequest1 = new AdRequest.Builder()
+                .build();
+
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest1);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
 
         ApplicationAnalytics.getInstance().trackScreenView("SCHEDULE");
 
@@ -79,7 +99,7 @@ public class Schedule extends AppCompatActivity {
     public void makeStringRequest(){
         showpDialog();
 
-    JsonArrayRequest req = new JsonArrayRequest(Urls.URL_SCHEDULE,
+    JsonArrayRequest req = new JsonArrayRequest(Urls.URL_SCHEDULE+"all",
             new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
@@ -183,136 +203,10 @@ public class Schedule extends AppCompatActivity {
             this.pDialog = null;
         }
     }
-
-
-   /* private class AsyncFetch extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(Schedule.this);
-        HttpURLConnection conn;
-        URL url = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
-            pdLoading.setCancelable(false);
-            pdLoading.show();
-
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
+    }
 
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-
-                // Enter URL address where your json file resides
-                // Even you can make call to php file which returns json data
-                url = new URL(Urls.URL_SCHEDULE);
-
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return e.toString();
-            }
-
-            try {
-                // Setup HttpURLConnection class to send and receive data from php and mysql
-                conn = (HttpURLConnection) url.openConnection();
-                //conn.setReadTimeout(READ_TIMEOUT);
-                //conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestMethod("GET");
-
-                // setDoOutput to true as we recieve data from json file
-                //conn.setDoOutput(true);
-
-            *//*} catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-                return e1.toString();
-            }
-
-            try {*//*
-
-                int response_code = conn.getResponseCode();
-
-                // Check if successful connection made
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    // Read data sent from server
-                    InputStream input = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        Log.e("line", line);
-                        result.append(line);
-                    }
-                    reader.close();
-
-                    // Pass data to onPostExecute method
-                    return result.toString();
-
-                }
-                else {
-
-                    return "unsuccessful";
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return e.toString();
-            } finally {
-                conn.disconnect();
-            }
-
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.e("result", result);
-
-            //this method will be running on UI thread
-
-            pdLoading.dismiss();
-            List<ScheduleData> data=new ArrayList<>();
-
-            pdLoading.dismiss();
-            try {
-                JSONObject jObj = new JSONObject("{\"results\":" + result + "}");
-                JSONArray jArray = jObj.optJSONArray("results");
-                // Extract data from json and store into ArrayList as class objects
-                for(int i=0;i<jArray.length();i++){
-                    JSONObject json_data = jArray.getJSONObject(i);
-                    ScheduleData scheduleData = new ScheduleData();
-                    scheduleid = scheduleData.schedule_id = json_data.getString("schedule_id");
-                    scheduleData.teamAlogo= json_data.getString("team_A_logo");
-                    scheduleData.teamBlogo= json_data.getString("team_B_logo");
-                    scheduleData.teamAShort_name= json_data.getString("team_A_short_name");
-                    scheduleData.teamBShort_name= json_data.getString("team_B_short_name");
-                    scheduleData.day= json_data.getString("day");
-                    scheduleData.date= json_data.getString("date");
-                    scheduleData.time=json_data.getString("time");
-                    scheduleData.place=json_data.getString("place");
-
-                    data.add(scheduleData);
-                }
-
-                // Setup and Handover data to recyclerview
-                mScheduleRV = (RecyclerView)findViewById(R.id.schedule_rv);
-                mScheduleRV.setItemAnimator(new ScaleInTopAnimator());
-                mAdapter = new AdapterSchedule(Schedule.this, data);
-
-                mScheduleRV.setAdapter(new ScaleInAnimationAdapter(mAdapter));
-                mScheduleRV.setLayoutManager(new LinearLayoutManager(Schedule.this));
-
-            } catch (JSONException e) {
-                Toast.makeText(Schedule.this, e.toString(), Toast.LENGTH_LONG).show();
-                Log.e("JSONException", "onPostExecute:"+e.toString()+"" );
-            }
-
-        }
-
-    }*/
 }

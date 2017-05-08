@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to IPL 10 Live App"
+            android:text="@string/login_heading"
             android:padding="8dp"
             android:gravity="center"
             android:textColor="@color/cardview_light_background"
@@ -38,7 +38,7 @@
             android:alpha="0.6"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="Now chat with all IPL fans around the world and participate in Predict 2 Win game."/>
+            android:text="@string/login_para"/>
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"

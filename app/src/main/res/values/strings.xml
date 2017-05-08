@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">IPL 2017 Live App</string>
+    <string name="app_name">T20 2017 Live</string>
     <string name="action_settings">Settings</string>
     <string name="SF_Medium" translatable="false">fonts/SF Medium.ttf</string>
     <string name="SF_Regular" translatable="false">fonts/SF Regular.ttf</string>
-    <string name="title_activity_team">IPL Teams</string>
+    <string name="title_activity_team">T20 Teams</string>
     <string name="title_activity_schedule">Schedule</string>
     <string name="title_activity_predict_n_win">Predict &amp; Win</string>
     <string name="title_activity_player_profile">player_profile</string>
@@ -30,7 +30,10 @@
     <string name="action_logout">Logout</string>
     <string name="sign_in">Sign In with Google</string>
     <string name="action_invite">Invite Friends</string>
-    <string name="invitation_message">Join me on IPL 10 K+ live chat.</string>
+    <string name="invitation_message">Join me on T20 Fans Live chat.</string>
     <string name="invitation_cta">Call to action</string>
-    <string name="invitation_title">Invite for IPL Chat</string>
+    <string name="invitation_title">Invite for T20 Fans Live Chat</string>
+    <string name="title_activity_live_match">LiveMatch</string>
+    <string name="login_heading">Welcome to T20 Live App</string>
+    <string name="login_para">Now chat with all T20 fans around the world and participate in Predict 2 Win game.</string>
 </resources>

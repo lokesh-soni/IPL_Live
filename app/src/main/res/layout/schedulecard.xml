@@ -116,7 +116,6 @@
             android:id="@+id/teamB_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RCB"
             android:layout_marginTop="8dip"
             android:textAllCaps="true"
             android:layout_gravity="center"
@@ -136,7 +135,7 @@
             android:textSize="14sp"
             android:gravity="center"
             android:padding="2dp"
-            android:text="Predict for this match and win big"
+            android:text="Predict for this match"
             android:textAllCaps="true"
             android:textColor="#f44336" />
     </LinearLayout>

@@ -25,18 +25,15 @@
             android:id="@+id/team_logo"
             android:layout_width="80dp"
             android:layout_height="65dp"
-            android:src="@color/kkr"
             android:scaleType="fitCenter"/>
 
         <TextView
             android:id="@+id/teamName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Team Name"
             android:textColor="@color/cardview_dark_background"
             android:textSize="18sp"
             android:layout_weight="0.99"
-            android:layout_marginLeft="8dp"
             />
         <ImageView
             android:layout_gravity="end|center_vertical"

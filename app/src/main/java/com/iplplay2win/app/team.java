@@ -35,8 +35,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 
@@ -55,6 +57,7 @@ public class team extends AppCompatActivity {
     ProgressDialog pDialog;
     String select_title;
     ArrayList<TeamData> data;
+    InterstitialAd mInterstitialAd;
 
 
     @Override
@@ -65,6 +68,23 @@ public class team extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mInterstitialAd = new InterstitialAd(this);
+
+        // set the ad unit ID
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
+
         Bundle extras = getIntent().getExtras();
         if (extras!=null) {
             select_title = extras.getString("SelectTitle");
@@ -74,8 +94,8 @@ public class team extends AppCompatActivity {
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
         AdView adView=(AdView)findViewById(R.id.adViewTeam);
-        AdRequest adRequest=new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        AdRequest adRequest1=new AdRequest.Builder().build();
+        adView.loadAd(adRequest1);
 
         ApplicationAnalytics.getInstance().trackScreenView("Team");
 
@@ -164,131 +184,9 @@ public class team extends AppCompatActivity {
             pDialog = null;
         }
     }
-
-   /* private class AsyncFetch extends AsyncTask<String, String, String> {
-        ProgressDialog pdLoading = new ProgressDialog(team.this);
-        HttpURLConnection conn;
-        URL url = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //this method will be running on UI thread
-            pdLoading.setMessage("\tLoading...");
-            pdLoading.setCancelable(false);
-            pdLoading.show();
-
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
         }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-
-                // Enter URL address where your json file resides
-                // Even you can make call to php file which returns json data
-                url = new URL(Urls.URL_TEAM);
-
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return e.toString();
-            }
-            try {
-
-                // Setup HttpURLConnection class to send and receive data from php and mysql
-                conn = (HttpURLConnection) url.openConnection();
-                //conn.setReadTimeout(READ_TIMEOUT);
-                //conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestMethod("GET");
-
-                // setDoOutput to true as we recieve data from json file
-                //conn.setDoOutput(true);
-
-            *//*} catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-                return e1.toString();
-            }
-
-            try {*//*
-
-                int response_code = conn.getResponseCode();
-
-                // Check if successful connection made
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    // Read data sent from server
-                    InputStream input = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        Log.e("line", line);
-                        result.append(line);
-                    }
-                    reader.close();
-
-                    // Pass data to onPostExecute method
-                    return result.toString();
-
-                }
-                else {
-
-                    return "unsuccessful";
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return e.toString();
-            } finally {
-                conn.disconnect();
-            }
-
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.e("result", result);
-
-            //this method will be running on UI thread
-            pdLoading.dismiss();
-            List<TeamData> data=new ArrayList<TeamData>();
-
-            pdLoading.dismiss();
-            try {
-                //JSONObject jObj = new JSONObject("{\"results\":" + result + "}");
-                JSONObject jObj = new JSONObject(result);
-                JSONArray jArray = jObj.optJSONArray("teams");
-                // Extract data from json and store into ArrayList as class objects
-                for(int i=0;i<jArray.length();i++){
-                    JSONObject json_data = jArray.getJSONObject(i);
-                    TeamData teamData = new TeamData();
-                    teamData.TeamLogo= json_data.optString("logo");
-                    teamData.TeamName= json_data.optString("full_name");
-                    //teamData.TeamID=json_data.getString("teamid");
-                    teamData.TeamID=json_data.optInt("teamid")+"";
-
-                    data.add(teamData);
-                }
-
-                // Setup and Handover data to recyclerview
-                mTeamRV = (RecyclerView)findViewById(R.id.teamRV);
-                mTeamRV.setItemAnimator(new ScaleInTopAnimator());
-
-                mTeamAdapter = new AdapterTeam(team.this, data);
-                mTeamRV.setAdapter(new ScaleInAnimationAdapter(mTeamAdapter));
-                mTeamRV.setLayoutManager(new LinearLayoutManager(team.this));
-
-            } catch (JSONException e) {
-                Toast.makeText(team.this, e.toString(), Toast.LENGTH_LONG).show();
-                Log.e("JSONException", "onPostExecute:"+e.toString()+"" );
-            }
-
-        }
-
-    }*/
-
+    }
 }

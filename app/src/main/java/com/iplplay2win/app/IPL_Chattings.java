@@ -112,7 +112,7 @@ public class IPL_Chattings extends AppCompatActivity implements
         }
     }
 
-    private static final String TAG = "IPL_Chattings";
+    private static final String TAG = "T20_Chattings";
     public static final String MESSAGES_CHILD = "messages";
     private static final int REQUEST_INVITE = 1;
     private static final int REQUEST_IMAGE = 2;
@@ -179,53 +179,6 @@ public class IPL_Chattings extends AppCompatActivity implements
         AdRequest aRequest=new AdRequest.Builder().build();
         mAdView.loadAd(aRequest);
 
-//        /*sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-//
-//        data = new ArrayList<>();
-//        Bundle extras = getIntent().getExtras();
-//        username = extras.getString("NAME");
-//        email = extras.getString("EMAIL");
-//       try{
-//        if (username.equals("name")) {
-//            LoginManager.getInstance().logOut();
-//            Intent logout = new Intent(this, login.class);
-//            startActivity(logout);
-//        }}catch (NullPointerException error){
-//           Log.e("Username Null", "onCreate: "+ error );
-//       }
-//            et_message = (EditText) findViewById(R.id.et_message);
-//            FloatingActionButton sendmess = (FloatingActionButton) findViewById(R.id.sendmessage);
-//            sendmess.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    message = et_message.getText().toString().trim();
-//
-//                    if (message.equals("")) {
-//                        et_message.setError("Blank Message cannot be sent");
-//                    } else {
-//                        makePostRequest();
-//                        et_message.clearFocus();
-//                        et_message.setText("");
-//                    }
-//                }
-//            });
-//            Timer timer = new Timer();
-//            TimerTask timerTask;
-//            timerTask = new TimerTask() {
-//                @Override
-//                public void run() {
-//                    makeStringRequest();
-//                    //refresh your textview
-//                }
-//            };
-//            timer.schedule(timerTask, 0, 2000);
-//
-//            recyclerView = (RecyclerView) findViewById(R.id.chatRV);
-//            recyclerView.setItemAnimator(new ScaleInTopAnimator());
-//
-//            mAdapter = new MessageAdapter(data, getApplicationContext());
-//            recyclerView.setAdapter(new AlphaInAnimationAdapter(mAdapter));
-//            recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUsername = ANONYMOUS;
 
@@ -437,144 +390,6 @@ public class IPL_Chattings extends AppCompatActivity implements
 //        Uri appLinkData = appLinkIntent.getData();
     }
 
-//    public void makePostRequest(){
-//
-////        showpDialog();
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, postmessageUrl,
-//                new Response.Listener<String>() {
-//
-//                    @Override
-//                    public void onResponse(String response) {
-//                        et_message.clearComposingText();
-////                        et_message.clearFocus();
-//                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//                        imm.hideSoftInputFromWindow(et_message.getWindowToken(), 0);
-//                        recyclerView.postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                if (getCurrentFocus()==et_message) {
-//                                recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
-//                            }}
-//                        }, 100);
-//                        makeStringRequest();
-////                        hidepDialog();
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.e("VOLLEY ERROR", "onErrorResponse: "+ error );
-//                        Toast.makeText(IPL_Chattings.this,"Go back and Try Again",Toast.LENGTH_LONG);
-////                        Toast.makeText(IPL_Chattings.this,"Something went wrong ! Please Try Again ",Toast.LENGTH_LONG ).show();
-////                        hidepDialog();
-//                    }
-//                }){
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String,String> map = new HashMap<String,String>();
-//                //map.put("task", "userLogin");
-//                map.put("message", message);
-//                map.put("email", email);
-//                map.put("name", username);
-//
-//              //  map.put("status","msg" );
-//                return map;
-//            }
-//            @Override
-//            public String getBodyContentType() {
-//                return "application/x-www-form-urlencoded";
-//            }
-//        };
-//        RequestQueue requestQueue= Volley.newRequestQueue(this);
-//        requestQueue.add(stringRequest);
-//
-//    }
-//
-//    public void makeStringRequest(){
-//
-//        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, messageUrl, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        JSONArray jsonArray=null;
-//                        try {
-//                            jsonArray=response.getJSONArray("chatters");
-//                            for(int i=0;i<jsonArray.length();i++){
-//                                JSONObject jsonObject=(JSONObject) jsonArray.get(i);
-//
-//                                MessageModel messageModel=new MessageModel();
-//                                messageModel.name=jsonObject.optString("name");
-//                                messageModel.message=jsonObject.optString("message");
-//                                messageModel.timing=jsonObject.optString("timing");
-//
-//                                data.add(messageModel);
-//                            }
-//
-//                            mAdapter.newMessage(data);
-//                            recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
-//
-////                            recyclerView.setItemAnimator(new ScaleInTopAnimator());
-////
-////                            mAdapter=new MessageAdapter(data);
-////                            recyclerView.setAdapter(new AlphaInAnimationAdapter(mAdapter));
-////                            recyclerView.setLayoutManager(new LinearLayoutManager(IPL_Chattings.this));
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            Log.e("JSONException", "onPostExecute:"+e.toString()+"" );
-//
-//                        }
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.e("chat Volley Request", "onErrorResponse: "+error+"" );
-//
-//
-//            }
-//        }){
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String,String> params=new HashMap<String, String>();
-//                return params;
-//            }
-//
-//            @Override
-//            public String getBodyContentType() {
-//                return "application/x-www-form-urlencoded";
-//            }
-//        };
-//        RequestQueue requestQueue= Volley.newRequestQueue(IPL_Chattings.this);
-//        requestQueue.add(jsonObjectRequest);
-//    }
-
-//    private void showpDialog(){
-//        if(!pDialog.isShowing())
-//            pDialog.show();
-//    }
-
-
-//    private void hidepDialog(){
-//        try {
-//            if ((pDialog != null) && pDialog.isShowing()) {
-//                pDialog.dismiss();
-//            }
-//        } catch (final IllegalArgumentException e) {
-//            // Handle or log or ignore
-//        } catch (final Exception e) {
-//            // Handle or log or ignore
-//        } finally {
-//            pDialog = null;
-//        }
-//    }
-
-//    public void onResume(){
-//        super.onResume();
-//
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -764,6 +579,7 @@ public class IPL_Chattings extends AppCompatActivity implements
                         } else {
                             Log.w(TAG, "Image upload task was not successful.",
                                     task.getException());
+
                         }
                     }
                 });

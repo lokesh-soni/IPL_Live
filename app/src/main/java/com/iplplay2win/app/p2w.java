@@ -43,13 +43,6 @@ public class p2w extends AppCompatActivity {
     ArrayList <String> list;
 
     ProgressDialog pDialog;
-    String predictscheduleURL="http://www.api.iplplay2win.in/v1/schedule/";
-
-    String postPredictdataURL="http://www.api.iplplay2win.in/v1/predict/create";
-
-    String statusURL="http://www.api.iplplay2win.in/v1/predict/user/";
-
-    String teamplayerslist="http://www.api.iplplay2win.in/v1/players/all/";
 
     LinearLayout predict_winner , predict_mom, predict_hwt, predict_hrg;
     TextView teamA,teamB,matchNo,place1;
@@ -72,8 +65,6 @@ public class p2w extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         scheduleid = extras.getString("SCHEDULEID");
         useremail = extras.getString("EMAIL");
-
-       // predictscheduleURL= predictscheduleURL+scheduleid;
 
         ApplicationAnalytics.getInstance().trackScreenView("P2W");
 
@@ -146,7 +137,7 @@ public class p2w extends AppCompatActivity {
     public void makeStringRequest() {
         hidepDialog();
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, predictscheduleURL+scheduleid, null,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, Urls.URL_SCHEDULE+scheduleid, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -332,10 +323,8 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
     public void makeStatusUrl(String scheduleid ,String userid){
 
         hidepDialog();
-//        statusURL= statusURL+userid+"/"+scheduleid;
 
-
-        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, statusURL+userid+"/"+scheduleid, null,
+        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, Urls.STATUS+userid+"/"+scheduleid, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -399,7 +388,7 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
 
         showpDialog();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, postPredictdataURL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Urls.PREDICT_DATA,
                 new Response.Listener<String>() {
 
                     @Override
@@ -448,7 +437,7 @@ private void selectteamoption(final LinearLayout clickeditem, final TextView ite
 
         hidepDialog();
 
-        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, teamplayerslist+teamshortname, null,
+        JsonObjectRequest jsonreq = new JsonObjectRequest(Request.Method.GET, Urls.URL_PLAYERS_LIST_TEAMS+"/"+teamshortname, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

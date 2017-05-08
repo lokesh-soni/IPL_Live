@@ -9,6 +9,7 @@
     android:layout_weight="1"
     tools:context="com.iplplay2win.app.MainActivityFragment"
     tools:showIn="@layout/activity_main">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -31,12 +32,15 @@
                 ads:adUnitId="@string/banner_ad_unit_id">
             </com.google.android.gms.ads.AdView>
 
-            <ImageView
-                android:layout_width="60dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:layout_marginTop="4dp"
-                android:src="@drawable/ipllogo" />
+                android:text="T20"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_blue_bright"
+                android:textSize="36sp"/>
             <TextView
                 android:id="@+id/matchislive"
                 android:layout_width="wrap_content"
@@ -46,8 +50,7 @@
                 android:textSize="20sp"
                 android:textColor="#C93330"
                 android:visibility="invisible"
-                android:layout_marginTop="-12dp"
-                android:layout_marginLeft="-4dip" />
+                android:layout_marginTop="-12dp" />
 
             <LinearLayout
                 android:id="@+id/matchdetails"
@@ -300,7 +303,8 @@
             android:layout_margin="8dp"
             android:layout_weight="0.5"
             app:cardCornerRadius="16dp"
-            ><LinearLayout
+            >
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -330,7 +334,7 @@ app:rb_color="@android:color/holo_red_light"
                 android:id="@+id/livechats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="IPL Live Chat"
+                android:text="Live Chat"
                 android:clickable="true"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
@@ -388,7 +392,7 @@ app:rb_color="@android:color/holo_red_light"
         android:id="@+id/livestats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="IPL10 Stats"
+        android:text="T20 Stats"
         android:padding="8dp"
         android:gravity="center"
         android:clickable="true"
@@ -456,7 +460,7 @@ app:rb_color="@android:color/holo_red_light"
             android:id="@+id/youtubevideos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="  Watch Exciting IPL Videos"
+            android:text="  Watch Exciting T20 Videos"
             android:textSize="15sp"
             android:textAllCaps="true"
             android:padding="8dp"

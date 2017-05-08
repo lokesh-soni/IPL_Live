@@ -56,7 +56,7 @@ public class youtubevideolist extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Exciting IPL Videos");
+        getSupportActionBar().setTitle("Exciting T20 Videos");
 
 
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4161588401571941/2137544315");
@@ -77,7 +77,6 @@ public class youtubevideolist extends AppCompatActivity {
                 showInterstitial();
             }
         });
-
 
         ApplicationAnalytics.getInstance().trackScreenView("YouTube Video List");
 

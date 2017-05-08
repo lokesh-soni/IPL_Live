@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:autoLink="all"
             android:paddingStart="4dp"
             android:paddingLeft="4dp"
             android:textColor="@color/colorAccent"/>
@@ -40,6 +41,7 @@
             android:textSize="15sp"
             android:maxWidth="250dp"
             android:padding="4dp"
+            android:autoLink="all"
             android:textColor="@color/cardview_dark_background"/>
 
         <ImageView

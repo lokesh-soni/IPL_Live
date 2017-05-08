@@ -10,8 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import com.android.volley.AuthFailureError;
@@ -42,6 +45,7 @@ public class livestats extends AppCompatActivity {
     private RecyclerView mPointsTableRV;
     private AdapterPoints mAdapterPoints;
     private AdapterCapsnALL mAdapterCaps;
+    InterstitialAd mInterstitialAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +54,30 @@ public class livestats extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mInterstitialAd = new InterstitialAd(this);
+
+        // set the ad unit ID
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
+
 
         //BANNER
         MobileAds.initialize(getApplicationContext(),Urls.ADMOB_CODE);
 
         AdView adView=(AdView)findViewById(R.id.adViewStats);
-        AdRequest adRequest=new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        AdRequest adRequest1=new AdRequest.Builder().build();
+        adView.loadAd(adRequest1);
 
         ApplicationAnalytics.getInstance().trackScreenView("Live Stats");
 
@@ -209,5 +230,9 @@ public class livestats extends AppCompatActivity {
             pDialog = null;
         }
     }
-
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
 }

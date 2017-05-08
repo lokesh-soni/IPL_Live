@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -104,32 +105,20 @@ public class MainActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
-
-
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 mInterstitialAd = new InterstitialAd(MainActivity.this);
-
-                // set the ad unit ID
                 mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
-
-                AdRequest adRequest = new AdRequest.Builder()
-                        .build();
-
-                // Load ads into Interstitial Ads
+                AdRequest adRequest = new AdRequest.Builder().build();
                 mInterstitialAd.loadAd(adRequest);
-
                 mInterstitialAd.setAdListener(new AdListener() {
                     public void onAdLoaded() {
                         showInterstitial();
                         Log.e("TAG", "onAdLoaded: Loaded " );
                     }
                 });
-
-
             }
         },600000);
 
@@ -143,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         RippleBackground rippleBackground=(RippleBackground)findViewById(R.id.rippleimage);
         rippleBackground.startRippleAnimation();
+
         UpdateHandler updateHandler = new UpdateHandler(MainActivity.this);
 // to start version checker
          try {
@@ -334,6 +324,7 @@ useronline = (TextView)findViewById(R.id.onlinecount);
 //                startActivity(callIntent);
 //            }
 //        });
+
     }
     @Override
     protected void onStart(){
@@ -367,6 +358,7 @@ else {
 
     }
 });
+
         batsmanovers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
